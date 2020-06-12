@@ -1,8 +1,121 @@
 import React from 'react';
 import styled from 'styled-components';
+import words from './mapping';
 
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const operation = ['addition', 'subtraction', 'multiplication', 'division']
+class Calculator extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      operation: 0,
+      x: 0,
+      y: 0,
+      answer: 0,
+      input: '',
+      system: ''
+    }
+  }
+
+  componentDidMount() {
+    this.generateProblem();
+  }
+
+  generateProblem = () => {
+    const operation = (Math.floor(Math.random() * 2) + 1);
+    const sys = (Math.floor(Math.random() * 2) + 1);
+    /* const x = (Math.floor(Math.random() * 10) + 1) */
+    const x = 1;
+    /* const y = (Math.floor(Math.random() * 10) + 1) */
+    const y = 2;
+    let answer;
+    let system;
+    let z;
+    switch (sys) {
+      case 1:
+        system = 'sino';
+        break;
+      case 2:
+        system = 'pure';
+        break;
+    }
+    switch(operation) {
+      case 1:
+        z = x + y;
+        answer = this.convertNumToWord(z, system)
+        break;
+      case 2:
+        z = x * y;
+        answer = this.convertNumToWord(z, system)
+        break;
+    }
+    this.setState({
+      operation,
+      x,
+      y,
+      answer,
+      system,
+      input: '',
+      response: ''
+    })
+  }
+
+  validate = (e) => {
+    e.preventDefault();
+    if (this.state.input === this.state.answer) {
+      this.setState({
+        response: 'correct'
+      })
+    } else {
+      this.setState({
+        response: 'wrong'
+      })
+    }
+    
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  returnOp = () => {
+    if (this.state.operation === 1) {
+      return '+'
+    } else if (this.state.operation === 2) {
+      return 'x'
+    }
+  }
+
+  convertNumToWord = (num, sys) => {
+    if (words[num] !== undefined) {
+      return words[num][sys];
+    }
+  }
+
+  render() {
+    return (
+      <StyledCalculator>
+        <Wrapper>
+          <Mathfield>
+            <span className="field1">{this.convertNumToWord(this.state.x, this.state.system)}</span>
+            <span className="field2">{this.convertNumToWord(this.state.y, this.state.system)} </span>
+            <span className="field3">{this.returnOp()}</span>
+          </Mathfield>
+          <form action="" onSubmit={this.validate}>
+            <label htmlFor="input">Answer</label>
+            <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
+            <StyledButton type="submit" theme="purple">Check</StyledButton>
+          </form>
+          <div>
+          <StyledButton onClick={this.generateProblem}>Next</StyledButton>
+          {this.state.response === 'correct' && <p>CORRECT!</p>}
+          {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
+          </div>
+        </Wrapper>
+      </StyledCalculator>
+    )
+  }
+}
 
 const Mathfield = styled.div`
   display: grid;
@@ -45,6 +158,9 @@ const StyledCalculator = styled.section`
     margin: 10px 0;
     text-align: center;
   }
+  form {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -67,95 +183,5 @@ const Wrapper = styled.div`
   width: 200px;
   margin: 0 auto
 `;
-
-class Calculator extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      op: 0,
-      x: 0,
-      y: 0,
-      answer: 0,
-      input: ''
-    }
-  }
-
-  componentDidMount() {
-    this.generateProblem();
-  }
-
-  generateProblem = () => {
-    const op = (Math.floor(Math.random() * 2) + 1)
-    const x = (Math.floor(Math.random() * 10) + 1)
-    const y = (Math.floor(Math.random() * 10) + 1)
-    let answer;
-    switch(op) {
-      case 1:
-        answer = x + y;
-        break;
-      case 2:
-        answer = x * y;
-        break;
-    }
-    this.setState({
-      op,
-      x,
-      y,
-      answer,
-      input: '',
-      response: ''
-    })
-  }
-
-  validate = (e) => {
-    e.preventDefault();
-    if (parseInt(this.state.input) === this.state.answer) {
-      this.setState({
-        response: 'correct'
-      })
-    } else {
-      this.setState({
-        response: 'wrong'
-      })
-    }
-    
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
-
-  returnOp = () => {
-    if (this.state.op === 1) {
-      return '+'
-    } else if (this.state.op === 2) {
-      return 'x'
-    }
-  }
-
-  render() {
-    return (
-      <StyledCalculator>
-        <Wrapper>
-          <Mathfield>
-            <span className="field1">{this.state.x}</span>
-            <span className="field2">{this.state.y}</span>
-            <span className="field3">{this.returnOp()}</span>
-          </Mathfield>
-          <label htmlFor="answer">Answer</label>
-          <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
-          <StyledButton theme="purple" onClick={this.validate}>Check</StyledButton>
-          <div>
-          <StyledButton onClick={this.generateProblem}>Next</StyledButton>
-          {this.state.response === 'correct' && <p>CORRECT!</p>}
-          {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
-          </div>
-        </Wrapper>
-      </StyledCalculator>
-    )
-  }
-}
 
 export default Calculator;
