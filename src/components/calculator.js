@@ -104,12 +104,12 @@ class Calculator extends React.Component {
           <form action="" onSubmit={this.validate}>
             <label htmlFor="input">Answer</label>
             <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
+            {this.state.response === 'correct' ? <p>CORRECT!</p> : <p>&nbsp;</p>}
+            {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
             <StyledButton type="submit" theme="purple">Check</StyledButton>
           </form>
           <div>
           <StyledButton onClick={this.generateProblem}>Next</StyledButton>
-          {this.state.response === 'correct' && <p>CORRECT!</p>}
-          {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
           </div>
         </Wrapper>
       </StyledCalculator>
@@ -157,9 +157,6 @@ const StyledCalculator = styled.section`
     padding: 5px;
     margin: 10px 0;
     text-align: center;
-  }
-  form {
-    margin-bottom: 0;
   }
 `;
 
