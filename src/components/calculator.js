@@ -6,20 +6,24 @@ const operation = ['addition', 'subtraction', 'multiplication', 'division']
 
 const Mathfield = styled.div`
   display: grid;
-  grid-template-columns: 25px 25px;
-  grid-template-rows: 25px 25px;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50px 50px;
+  border-bottom: 3px solid black;
   .field1 {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
     justify-self: end;
+    font-size: 32px;
   }
   .field2 {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     justify-self: end;
+    font-size: 32px;
   }
   .field3 {
     grid-row: 2 / 3;
+    font-size: 32px;
   }
 `;
 
@@ -28,14 +32,40 @@ const StyledCalculator = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  label {
+    margin-top: 25px;
+    display: block;
+    text-align: center;
+  }
+  input {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px 0;
+    text-align: center;
+  }
 `;
 
 const StyledButton = styled.button`
-  background: none;
-  border: 2px solid black;
+  background: ${props => (props.theme === "purple" ? "#8353c6" : "white")};
+  color: ${props => (props.theme === "purple" ? "white" : "#8353c6")};;
+  border: 2px solid #8353c6;
   border-radius: 5px;
-  width: 100px;
+  width: 100%;
   margin: 10px 0;
+  padding: 5px;
+  transition: all 0.2s;
+  &:hover {
+    background: #5e3399;
+    border: 2px solid #5e3399;
+    color: white;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 200px;
+  margin: 0 auto
 `;
 
 class Calculator extends React.Component {
@@ -108,19 +138,21 @@ class Calculator extends React.Component {
   render() {
     return (
       <StyledCalculator>
-        <Mathfield>
-          <span className="field1">{this.state.x}</span>
-          <span className="field2">{this.state.y}</span>
-          <span className="field3">{this.returnOp()}</span>
-        </Mathfield>
-        <label htmlFor="answer">Answer</label>
-        <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
-        <StyledButton onClick={this.validate}>Check</StyledButton>
-        <div>
-        <StyledButton onClick={this.generateProblem}>Next</StyledButton>
-        {this.state.response === 'correct' && <p>CORRECT!</p>}
-        {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
-        </div>
+        <Wrapper>
+          <Mathfield>
+            <span className="field1">{this.state.x}</span>
+            <span className="field2">{this.state.y}</span>
+            <span className="field3">{this.returnOp()}</span>
+          </Mathfield>
+          <label htmlFor="answer">Answer</label>
+          <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
+          <StyledButton theme="purple" onClick={this.validate}>Check</StyledButton>
+          <div>
+          <StyledButton onClick={this.generateProblem}>Next</StyledButton>
+          {this.state.response === 'correct' && <p>CORRECT!</p>}
+          {this.state.response === 'wrong' && <p>Wrong... {this.state.answer}!</p>}
+          </div>
+        </Wrapper>
       </StyledCalculator>
     )
   }

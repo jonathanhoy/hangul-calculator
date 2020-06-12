@@ -4,12 +4,13 @@ import React from "react"
 import styled from "styled-components"
 
 const StyledHeader = styled.header`
-  background: rebeccapurple;
+  background: #5e3399;
   margin-bottom: 1.45rem;
   div {
     margin: 0 auto;
     max-width: 960px;
     padding: 1.45rem 1.0875rem;
+    text-align: center;
   }
   h1 {
     margin: 0;
