@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 
 import styled from "styled-components"
 
-import Calculator from "../components/calculator"
+import Calculator from "../components/Calculator"
 
 const Paragraph = styled.p`
   font-family: 'Helvetica', 'Arial', 'Sans Serif';

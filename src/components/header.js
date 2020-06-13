@@ -5,7 +5,6 @@ import styled from "styled-components"
 
 const StyledHeader = styled.header`
   background: #5e3399;
-  margin-bottom: 1.45rem;
   div {
     margin: 0 auto;
     max-width: 960px;
@@ -16,13 +15,21 @@ const StyledHeader = styled.header`
     margin: 0;
     color: white;
   }
+  @media (max-width: 500px) {
+    .mobileBlock {
+      display: inline-block;
+    }
+    .mobileHide {
+      display: none;
+    }
+  }
 `;
 
 const Header = ({ siteTitle }) => (
   <StyledHeader>
     <div>
       <h1>
-        한글 계산기 - Hangul Calculator
+        <span className="mobileBlock">한글 계산기</span> <span className="mobileHide">-</span> <span className="mobileBlock">Hangul Calculator</span>
       </h1>
     </div>
   </StyledHeader>
