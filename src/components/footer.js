@@ -1,34 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MainContainer } from './layout';
 
 const year = new Date();
 const currentyear = year.getFullYear();
 
 const Footer = () => (
   <StyledFooter>
-    <p>&copy; Jonathan {currentyear}</p>
+    <MainContainer>
+      <p>&copy; Jonathan {currentyear}</p>
+    </MainContainer>
   </StyledFooter>
 )
 
 const StyledFooter = styled.footer`
-  bottom: 0;
-  position: absolute;
-  width: 100%;
   text-align: center;
-  padding: 15px;
-  background: rgba(0,0,0,0.8);
+  margin-top: 50px;
   p {
-    color: white;
-    margin: 0;
+    color: rgba(0,0,0,0.8);
     font-weight: 600;
     font-size: 16px;
   }
   @media (max-width: 500px) {
-    position: static;
-    background: white;
     p {
-      color: rgba(0,0,0,0.8);
-      text-align: left;
+      text-align: right;
     }
   }
 `;

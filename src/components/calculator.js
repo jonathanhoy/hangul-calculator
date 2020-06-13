@@ -427,7 +427,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   width: 200px;
   margin: 0 auto;
 `;
