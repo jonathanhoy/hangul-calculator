@@ -4,10 +4,10 @@ import styled from 'styled-components';
 const Cheatsheet = () => (
   <CheatsheetContainer>
     <div>
-      <p>Sino</p>
+      <p>Sino-Korean</p>
       <List>
         <li><span>1</span><span>일</span></li>
-        <li><span>2</span><span>아</span></li>
+        <li><span>2</span><span>이</span></li>
         <li><span>3</span><span>삼</span></li>
         <li><span>4</span><span>사</span></li>
         <li><span>5</span><span>오</span></li>
@@ -19,7 +19,7 @@ const Cheatsheet = () => (
       </List>
     </div>
     <div>
-      <p>Pure</p>
+      <p>Pure Korean</p>
       <List>
         <li><span>1</span><span>하나</span></li>
         <li><span>2</span><span>둘</span></li>
@@ -37,12 +37,13 @@ const Cheatsheet = () => (
 )
 
 const CheatsheetContainer = styled.div`
-  display: flex;
-  div {
-    margin-right: 25px;
-    position: relative;
-  }
+  position: relative;
   p {
+    color: grey;
+    transition: all 0.2s;
+    &:hover {
+      color: black;
+    }
     &:hover + ul {
       display: block;
     }
@@ -50,11 +51,11 @@ const CheatsheetContainer = styled.div`
 `;
 
 const List = styled.ul`
-  /* border: 2px solid black; */
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 30px;
+  top: 100px;
+  left: 0;
   padding-left: 0;
   list-style: none;
   width: 60px;
@@ -63,7 +64,6 @@ const List = styled.ul`
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
-    
   }
 `;
 

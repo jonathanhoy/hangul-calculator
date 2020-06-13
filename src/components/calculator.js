@@ -17,6 +17,8 @@ class Calculator extends React.Component {
       input: '',
       system: '',
       simpleNumbersToggle: true,
+      multipleChoiceToggle: false,
+      multipleChoiceArr: []
     }
   }
 
@@ -27,11 +29,17 @@ class Calculator extends React.Component {
   generateProblem = () => {
     const operation = this.state.simpleNumbersToggle === false ? (Math.floor(Math.random() * 2) + 1) : 1;
     const sys = (Math.floor(Math.random() * 2) + 1);
-    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 10) + 1 : Math.floor(Math.random() * 10) + 1;
+    const x = Math.floor(Math.random() * 10) + 1;
     const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * 10) + 1;
+
     let answer;
     let system;
     let z;
+    let incorrect1;
+    let incorrect2;
+    let incorrect3;
+    let tempArr;
+
     switch (sys) {
       case 1:
         system = 'sino';
@@ -39,7 +47,7 @@ class Calculator extends React.Component {
       case 2:
         system = 'pure';
         break;
-    }
+    };
     switch(operation) {
       case 1:
         z = x + y;
@@ -49,7 +57,29 @@ class Calculator extends React.Component {
         z = x * y;
         answer = this.convertNumToWord(z, system)
         break;
-    }
+    };
+
+    if (this.state.simpleNumbersToggle === false) {
+      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => parseInt(num[0]) !== x));
+      [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
+      incorrect1 = incorrect1[1][system];
+      incorrect2 = incorrect2[1][system];
+      incorrect3 = incorrect3[1][system];
+      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3])
+      console.log(x, shuffledArr);
+    } else if (this.state.simpleNumbersToggle === true) {
+      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      const shuffledArr = this.shuffleArray(arr.filter(num => num !== x));
+      [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
+      incorrect1 = this.convertNumToWord(incorrect1, system);
+      incorrect2 = this.convertNumToWord(incorrect2, system);
+      incorrect3 = this.convertNumToWord(incorrect3, system);
+      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3]);
+      
+      
+    } 
+
+
     this.setState({
       operation,
       x,
@@ -57,8 +87,21 @@ class Calculator extends React.Component {
       answer,
       system,
       input: '',
-      response: ''
-    })
+      response: '',
+      multipleChoiceArr: tempArr,
+    });
+  }
+
+  shuffleArray = (array) => {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 
   validate = (e) => {
@@ -81,15 +124,7 @@ class Calculator extends React.Component {
     })
   }
 
-  handleCheckboxChange = event => this.setState({ simpleNumbersToggle: event.target.checked })
-
-  returnOp = () => {
-    if (this.state.operation === 1) {
-      return '+'
-    } else if (this.state.operation === 2) {
-      return 'x'
-    }
-  }
+  handleCheckboxChange = event => this.setState({ [event.target.id]: event.target.checked })
 
   convertNumToWord = (num, sys) => {
     if (words[num] !== undefined) {
@@ -102,15 +137,28 @@ class Calculator extends React.Component {
       <>
         <Settings>
           <Cheatsheet/>
-          <div>
-            <label>
-              <p>Simple numbers</p>
-              <Checkbox
-                checked={this.state.simpleNumbersToggle}
-                onChange={this.handleCheckboxChange}
-              />
-            </label>
-          </div>
+          <Toggles>
+            <div>
+              <label>
+                <p>Simple numbers</p>
+                <Checkbox
+                  id="simpleNumbersToggle"
+                  checked={this.state.simpleNumbersToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <p>Multiple choice</p>
+                <Checkbox
+                  id="multipleChoiceToggle"
+                  checked={this.state.multipleChoiceToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
+          </Toggles>
         </Settings>
         <StyledCalculator>
           <Wrapper>
@@ -120,12 +168,47 @@ class Calculator extends React.Component {
               <span className="operation"><img src={svg} alt={`A${this.state.operation === 1 ? 'n addition' : ' multiplication'} icon`}/></span>
             </Mathfield>
             <form action="" onSubmit={this.validate}>
-              <label htmlFor="input">Answer</label>
-              <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
-              {this.state.response === '' && <p>&nbsp;</p>}
-              {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
-              {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
-              <StyledButton type="submit" theme="purple">Check</StyledButton>
+              {
+                this.state.multipleChoiceToggle === false &&
+                (
+                  <>
+                    <label htmlFor="input">Answer</label>
+                    <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
+                    {this.state.response === '' && <p>&nbsp;</p>}
+                    {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
+                    {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
+                    <StyledButton type="submit" theme="purple">Check</StyledButton>
+                  </>
+                )
+              }
+              {
+                this.state.multipleChoiceToggle === true &&
+                <MultipleChoice>
+                  <div className="container">
+
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} value={this.state.multipleChoiceArr[0]}/>
+                    <label htmlFor={this.state.multipleChoiceArr[0]}>
+                      {this.state.multipleChoiceArr[0]}
+                    </label>
+
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} value={this.state.multipleChoiceArr[1]} />
+                    <label htmlFor={this.state.multipleChoiceArr[1]}>
+                      {this.state.multipleChoiceArr[1]}
+                    </label>
+                    
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} value={this.state.multipleChoiceArr[2]} />
+                    <label htmlFor={this.state.multipleChoiceArr[2]}>
+                      {this.state.multipleChoiceArr[2]}
+                    </label>
+
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} value={this.state.multipleChoiceArr[3]} />
+                    <label htmlFor={this.state.multipleChoiceArr[3]}>
+                      {this.state.multipleChoiceArr[3]}
+                    </label>
+                  </div>
+                  <StyledButton type="submit" theme="purple">Check</StyledButton>
+                </MultipleChoice>
+              }
             </form>
             <div>
             <StyledButton onClick={this.generateProblem}>Next</StyledButton>
@@ -148,6 +231,10 @@ const Settings = styled.section`
   p, span {
     font-weight: 600;
   }
+`;
+
+const Toggles = styled.div`
+  text-align: right;
 `;
 
 const Mathfield = styled.div`
@@ -190,7 +277,7 @@ const StyledCalculator = styled.section`
     text-align: center;
     font-weight: 600;
   }
-  input {
+  input[type="text"] {
     width: 100%;
     border: 2px solid black;
     border-radius: 5px;
@@ -203,6 +290,39 @@ const StyledCalculator = styled.section`
     text-align: center;
     font-size: 32px;
     margin: 16px 0;
+  }
+`;
+
+const MultipleChoice = styled.div`
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 15px;
+    margin-top: 61px;
+  }
+  input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+  }
+  label {
+    display: inline-block;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    margin-top: 0;
+    font-size: 24px;
+  }
+  input[type="radio"]:checked+label {
+    background-color: #ac8cd9;
+    border-color: #ac8cd9;
+  }
+  label:hover {
+    background-color: #ac8cd9;
+  }
+  input[type="submit"] {
+    grid-column: 0 / 4;
   }
 `;
 
