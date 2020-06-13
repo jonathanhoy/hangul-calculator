@@ -23,7 +23,7 @@ const StyledFooter = styled.footer`
   }
   @media (max-width: 500px) {
     p {
-      /* text-align: left; */
+      text-align: right;
     }
   }
 `;
