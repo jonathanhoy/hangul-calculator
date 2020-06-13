@@ -44,6 +44,7 @@ const CheatsheetContainer = styled.section`
   p {
     color: grey;
     transition: all 0.2s;
+    display: inline-block;
     &:hover {
       color: #5e3399;
     }
