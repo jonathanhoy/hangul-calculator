@@ -40,7 +40,7 @@ const SiteContainer = styled.div`
   height: 100vh;
 `;
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
   margin: 0 auto;
   max-width: 960px;
   padding: 0 1.0875rem 1.45rem;
