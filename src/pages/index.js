@@ -6,7 +6,7 @@ import SEO from "../components/seo"
 
 import styled from "styled-components"
 
-import Calculator from "../components/Calculator"
+import Calculator from "../components/Calculator.js"
 
 const Paragraph = styled.p`
   font-family: 'Helvetica', 'Arial', 'Sans Serif';
