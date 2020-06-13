@@ -324,6 +324,7 @@ const Calculator = styled.section`
     grid-column: 2 / 3;
     grid-row: 1 / 3;
     margin-top: 30px;
+    margin-bottom: 0;
   }
 `;
 
