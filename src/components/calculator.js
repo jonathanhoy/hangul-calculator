@@ -386,8 +386,8 @@ const MultipleChoice = styled.div`
     color: white;
   }
   label:hover {
-    background-color: #ac8cd9;
-    border-color: #ac8cd9;
+    background-color: #8353c6;
+    border-color: #8353c6;
     color: white;
   }
   input[type="submit"] {
