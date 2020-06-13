@@ -18,7 +18,8 @@ class Calculator extends React.Component {
       system: '',
       simpleNumbersToggle: true,
       multipleChoiceToggle: false,
-      multipleChoiceArr: []
+      multipleChoiceArr: [],
+      checkedRadio: null
     }
   }
 
@@ -27,9 +28,9 @@ class Calculator extends React.Component {
   }
 
   generateProblem = () => {
-    const operation = this.state.simpleNumbersToggle === false ? (Math.floor(Math.random() * 2) + 1) : 1;
+    const operation = this.state.simpleNumbersToggle === true ? 1 : (Math.floor(Math.random() * 2) + 1);
     const sys = (Math.floor(Math.random() * 2) + 1);
-    const x = Math.floor(Math.random() * 10) + 1;
+    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 10) + 1;
     const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * 10) + 1;
 
     let answer;
@@ -60,7 +61,7 @@ class Calculator extends React.Component {
     };
 
     if (this.state.simpleNumbersToggle === false) {
-      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0])) !== answer));
+      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
       [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
       incorrect1 = incorrect1[1][system];
       incorrect2 = incorrect2[1][system];
@@ -85,6 +86,7 @@ class Calculator extends React.Component {
       input: '',
       response: '',
       multipleChoiceArr: tempArr,
+      checkedRadio: null,
     });
   }
 
@@ -110,13 +112,19 @@ class Calculator extends React.Component {
       this.setState({
         response: 'wrong'
       })
-    }
-    
+    } 
   }
 
-  handleChange = (e) => {
+  handleSingleInput = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
+      input: e.target.value
+    })
+  }
+
+  handleMultipleChoice = (e) => {
+    this.setState({
+      input: e.target.value,
+      checkedRadio: e.target.value
     })
   }
 
@@ -169,7 +177,7 @@ class Calculator extends React.Component {
                 (
                   <>
                     <label htmlFor="input">Answer</label>
-                    <input type="text" id="input" name="input" onChange={this.handleChange} value={this.state.input}/>
+                    <input type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input}/>
                     {this.state.response === '' && <p>&nbsp;</p>}
                     {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
                     {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
@@ -182,26 +190,29 @@ class Calculator extends React.Component {
                 <MultipleChoice>
                   <div className="container">
 
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} value={this.state.multipleChoiceArr[0]}/>
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[0]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[0]}/>
                     <label htmlFor={this.state.multipleChoiceArr[0]}>
                       {this.state.multipleChoiceArr[0]}
                     </label>
 
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} value={this.state.multipleChoiceArr[1]} />
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[1]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[1]}/>
                     <label htmlFor={this.state.multipleChoiceArr[1]}>
                       {this.state.multipleChoiceArr[1]}
                     </label>
                     
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} value={this.state.multipleChoiceArr[2]} />
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[2]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[2]}/>
                     <label htmlFor={this.state.multipleChoiceArr[2]}>
                       {this.state.multipleChoiceArr[2]}
                     </label>
 
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} value={this.state.multipleChoiceArr[3]} />
+                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[3]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[3]}/>
                     <label htmlFor={this.state.multipleChoiceArr[3]}>
                       {this.state.multipleChoiceArr[3]}
                     </label>
                   </div>
+                  {this.state.response === '' && <p>&nbsp;</p>}
+                  {this.state.response === 'correct' && <p>맞아요! 🎉</p>}
+                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
                   <StyledButton type="submit" theme="purple">Check</StyledButton>
                 </MultipleChoice>
               }
