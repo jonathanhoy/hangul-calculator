@@ -60,25 +60,21 @@ class Calculator extends React.Component {
     };
 
     if (this.state.simpleNumbersToggle === false) {
-      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => parseInt(num[0]) !== x));
+      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0])) !== answer));
       [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
       incorrect1 = incorrect1[1][system];
       incorrect2 = incorrect2[1][system];
       incorrect3 = incorrect3[1][system];
-      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3])
-      console.log(x, shuffledArr);
+      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3]);
     } else if (this.state.simpleNumbersToggle === true) {
-      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      const shuffledArr = this.shuffleArray(arr.filter(num => num !== x));
+      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const shuffledArr = this.shuffleArray((arr.filter(num => this.convertNumToWord(num, system) !== answer)));
       [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
       incorrect1 = this.convertNumToWord(incorrect1, system);
       incorrect2 = this.convertNumToWord(incorrect2, system);
       incorrect3 = this.convertNumToWord(incorrect3, system);
       tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3]);
-      
-      
-    } 
-
+    };
 
     this.setState({
       operation,
