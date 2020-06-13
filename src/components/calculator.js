@@ -379,6 +379,7 @@ const MultipleChoice = styled.div`
     border-radius: 5px;
     margin-top: 0;
     font-size: 24px;
+    transition: all 0.2s;
   }
   input[type="radio"]:checked+label {
     background-color: #5E3399;
