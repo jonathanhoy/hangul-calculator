@@ -12,17 +12,25 @@ const Footer = () => (
 
 const StyledFooter = styled.footer`
   bottom: 0;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    padding: 15px;
-    background: rgba(0,0,0,0.8);
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  background: rgba(0,0,0,0.8);
+  p {
+    color: white;
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  @media (max-width: 500px) {
+    position: static;
+    background: white;
     p {
-      color: white;
-      margin: 0;
-      font-weight: 600;
-      font-size: 16px;
+      color: rgba(0,0,0,0.8);
+      text-align: left;
     }
+  }
 `;
 
 export default Footer;
