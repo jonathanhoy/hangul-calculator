@@ -275,10 +275,10 @@ const Toggles = styled.div`
         padding: 10px;
       }
       p.simpleNumbers {
-        color: ${props => (props.simpleNumbersToggle === true && 'white')}
+        color: ${props => (props.simpleNumbersToggle === true ? 'white' : '#5e3399')}
       }
       p.multipleChoice {
-        color: ${props => (props.multipleChoiceToggle === true && 'white')}
+        color: ${props => (props.multipleChoiceToggle === true ? 'white' : '#5e3399')}
       }
     }
   }
@@ -298,7 +298,7 @@ const Calculator = styled.section`
   }
   input[type="text"] {
     width: 100%;
-    border: 2px solid black;
+    border: 3px solid black;
     border-radius: 5px;
     padding: 5px;
     margin: 10px 0;
@@ -375,7 +375,7 @@ const MultipleChoice = styled.div`
   label {
     display: inline-block;
     padding: 20px;
-    border: 2px solid #000;
+    border: 3px solid #000;
     border-radius: 5px;
     margin-top: 0;
     font-size: 24px;
@@ -408,7 +408,7 @@ const MultipleChoice = styled.div`
 const StyledButton = styled.button`
   background: ${props => (props.theme === "purple" ? "#8353c6" : "white")};
   color: ${props => (props.theme === "purple" ? "white" : "#8353c6")};;
-  border: 2px solid #8353c6;
+  border: 3px solid #8353c6;
   border-radius: 5px;
   width: 100%;
   margin: 10px 0;
@@ -417,7 +417,7 @@ const StyledButton = styled.button`
   font-weight: 600;
   &:hover {
     background: #5E3399;
-    border: 2px solid #5E3399;
+    border: 3px solid #5E3399;
     color: white;
   }
   @media (max-width: 500px) {

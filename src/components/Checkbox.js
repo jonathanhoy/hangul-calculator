@@ -31,7 +31,7 @@ const StyledCheckbox = styled.div`
   height: 25px;
   background: ${props => props.checked ? '#5E3399' : 'white'};
   border: 3px solid #5E3399;
-  border-radius: 3px;
+  border-radius: 5px;
   transition: all 0.2s;
   @media (max-width: 500px) {
     position: absolute;
