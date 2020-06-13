@@ -29,8 +29,8 @@ const StyledCheckbox = styled.div`
   display: inline-block;
   width: 25px;
   height: 25px;
-  background: ${props => props.checked ? '#8353c6' : 'white'};
-  border: 3px solid #8353c6;
+  background: ${props => props.checked ? '#5E3399' : 'white'};
+  border: 3px solid #5E3399;
   border-radius: 3px;
   transition: all 0.2s;
   @media (max-width: 500px) {

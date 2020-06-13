@@ -365,6 +365,7 @@ const MultipleChoice = styled.div`
     grid-template-rows: 1fr 1fr;
     grid-gap: 15px;
     margin-top: 10px;
+    margin-bottom: 26px;
   }
   input[type="radio"] {
     opacity: 0;
@@ -380,11 +381,14 @@ const MultipleChoice = styled.div`
     font-size: 24px;
   }
   input[type="radio"]:checked+label {
-    background-color: #ac8cd9;
-    border-color: #ac8cd9;
+    background-color: #5E3399;
+    border-color: #5E3399;
+    color: white;
   }
   label:hover {
     background-color: #ac8cd9;
+    border-color: #ac8cd9;
+    color: white;
   }
   input[type="submit"] {
     grid-column: 0 / 4;
@@ -412,8 +416,8 @@ const StyledButton = styled.button`
   transition: all 0.2s;
   font-weight: 600;
   &:hover {
-    background: #5e3399;
-    border: 2px solid #5e3399;
+    background: #5E3399;
+    border: 2px solid #5E3399;
     color: white;
   }
   @media (max-width: 500px) {
