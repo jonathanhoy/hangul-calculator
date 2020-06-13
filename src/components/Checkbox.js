@@ -33,6 +33,19 @@ const StyledCheckbox = styled.div`
   border: 3px solid #8353c6;
   border-radius: 3px;
   transition: all 0.2s;
+  @media (max-width: 500px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    svg {
+      display: none;
+    }
+  }
 `
 
 const CheckboxContainer = styled.div`

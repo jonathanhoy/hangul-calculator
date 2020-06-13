@@ -6,7 +6,7 @@ import Checkbox from './Checkbox';
 import Cheatsheet from './Cheatsheet';
 import svg from '../images/noun_Math_538141.svg';
  
-class Calculator extends React.Component {
+class CalculatorComponent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -138,13 +138,72 @@ class Calculator extends React.Component {
 
   render() {
     return (
-      <>
+      <MainContainer>
+        <Cheatsheet/>
+        <Calculator>
+          <Wrapper>
+            <Mathfield operation={this.state.operation}>
+              <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
+              <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
+              <span className="operation"><img src={svg} alt={`A${this.state.operation === 1 ? 'n addition' : ' multiplication'} icon`}/></span>
+            </Mathfield>
+          </Wrapper>
+          <form action="" onSubmit={this.validate}>
+            {
+              this.state.multipleChoiceToggle === false &&
+              (
+                <Wrapper>
+                  <label htmlFor="input">Answer</label>
+                  <input type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input} placeholder="Answer"/>
+                  {this.state.response === '' && <p>&nbsp;</p>}
+                  {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
+                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
+                  <StyledButton type="submit" theme="purple">Check</StyledButton>
+                </Wrapper>
+              )
+            }
+            {
+              this.state.multipleChoiceToggle === true &&
+              <MultipleChoice>
+                <div className="container">
+                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[0]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[0]}/>
+                  <label htmlFor={this.state.multipleChoiceArr[0]}>
+                    {this.state.multipleChoiceArr[0]}
+                  </label>
+
+                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[1]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[1]}/>
+                  <label htmlFor={this.state.multipleChoiceArr[1]}>
+                    {this.state.multipleChoiceArr[1]}
+                  </label>
+                  
+                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[2]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[2]}/>
+                  <label htmlFor={this.state.multipleChoiceArr[2]}>
+                    {this.state.multipleChoiceArr[2]}
+                  </label>
+
+                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[3]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[3]}/>
+                  <label htmlFor={this.state.multipleChoiceArr[3]}>
+                    {this.state.multipleChoiceArr[3]}
+                  </label>
+                </div>
+                <Wrapper>
+                  {this.state.response === '' && <p>&nbsp;</p>}
+                  {this.state.response === 'correct' && <p>맞아요! 🎉</p>}
+                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
+                  <StyledButton type="submit" theme="purple">Check</StyledButton>
+                </Wrapper>
+              </MultipleChoice>
+            }
+          </form>
+          <Wrapper>
+            <StyledButton onClick={this.generateProblem}>Next</StyledButton>
+          </Wrapper>
+        </Calculator>
         <Settings>
-          <Cheatsheet/>
-          <Toggles>
-            <div>
+          <Toggles simpleNumbersToggle={this.state.simpleNumbersToggle} multipleChoiceToggle={this.state.multipleChoiceToggle}>
+            <div className="toggleContainer">
               <label>
-                <p>Simple numbers</p>
+                <p className="simpleNumbers">Simple numbers</p>
                 <Checkbox
                   id="simpleNumbersToggle"
                   checked={this.state.simpleNumbersToggle}
@@ -152,9 +211,9 @@ class Calculator extends React.Component {
                 />
               </label>
             </div>
-            <div>
+            <div className="toggleContainer">
               <label>
-                <p>Multiple choice</p>
+                <p className="multipleChoice">Multiple choice</p>
                 <Checkbox
                   id="multipleChoiceToggle"
                   checked={this.state.multipleChoiceToggle}
@@ -164,73 +223,25 @@ class Calculator extends React.Component {
             </div>
           </Toggles>
         </Settings>
-        <StyledCalculator>
-          <Wrapper>
-            <Mathfield operation={this.state.operation}>
-              <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
-              <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
-              <span className="operation"><img src={svg} alt={`A${this.state.operation === 1 ? 'n addition' : ' multiplication'} icon`}/></span>
-            </Mathfield>
-            <form action="" onSubmit={this.validate}>
-              {
-                this.state.multipleChoiceToggle === false &&
-                (
-                  <>
-                    <label htmlFor="input">Answer</label>
-                    <input type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input}/>
-                    {this.state.response === '' && <p>&nbsp;</p>}
-                    {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
-                    {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
-                    <StyledButton type="submit" theme="purple">Check</StyledButton>
-                  </>
-                )
-              }
-              {
-                this.state.multipleChoiceToggle === true &&
-                <MultipleChoice>
-                  <div className="container">
-
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[0]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[0]}/>
-                    <label htmlFor={this.state.multipleChoiceArr[0]}>
-                      {this.state.multipleChoiceArr[0]}
-                    </label>
-
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[1]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[1]}/>
-                    <label htmlFor={this.state.multipleChoiceArr[1]}>
-                      {this.state.multipleChoiceArr[1]}
-                    </label>
-                    
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[2]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[2]}/>
-                    <label htmlFor={this.state.multipleChoiceArr[2]}>
-                      {this.state.multipleChoiceArr[2]}
-                    </label>
-
-                    <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[3]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[3]}/>
-                    <label htmlFor={this.state.multipleChoiceArr[3]}>
-                      {this.state.multipleChoiceArr[3]}
-                    </label>
-                  </div>
-                  {this.state.response === '' && <p>&nbsp;</p>}
-                  {this.state.response === 'correct' && <p>맞아요! 🎉</p>}
-                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
-                  <StyledButton type="submit" theme="purple">Check</StyledButton>
-                </MultipleChoice>
-              }
-            </form>
-            <div>
-            <StyledButton onClick={this.generateProblem}>Next</StyledButton>
-            </div>
-          </Wrapper>
-        </StyledCalculator>
-      </>
+      </MainContainer>
     )
   }
 }
 
+const MainContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  @media (max-width: 500px) {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 10px;
+  }
+`;
+
 const Settings = styled.section`
-  margin: 25px 0;
+  justify-self: end;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   p {
     margin-right: 10px;
     display: inline-block;
@@ -238,10 +249,82 @@ const Settings = styled.section`
   p, span {
     font-weight: 600;
   }
+  @media (max-width: 500px) {
+    grid-row: 1 / 2;
+    width: 100%;
+    margin: 5px 0;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
 `;
 
 const Toggles = styled.div`
   text-align: right;
+  @media (max-width: 500px) {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .toggleContainer {
+      width: auto;
+      position: relative;
+      margin-top: 5px;
+      width: 100%;
+      p {
+        margin: 0;
+        padding: 10px;
+      }
+      p.simpleNumbers {
+        color: ${props => (props.simpleNumbersToggle === true && 'white')}
+      }
+      p.multipleChoice {
+        color: ${props => (props.multipleChoiceToggle === true && 'white')}
+      }
+    }
+  }
+`;
+
+const Calculator = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  label {
+    margin-top: 25px;
+    display: block;
+    text-align: center;
+    font-weight: 600;
+  }
+  input[type="text"] {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px 0;
+    text-align: center;
+    font-size: 32px;
+  }
+  form p {
+    text-align: center;
+    font-size: 32px;
+    margin: 16px 0;
+  }
+  label[for="input"] { 
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  @media (max-width: 500px) {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    margin-top: 30px;
+  }
 `;
 
 const Mathfield = styled.div`
@@ -249,6 +332,7 @@ const Mathfield = styled.div`
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 60px 60px;
   border-bottom: 3px solid black;
+  margin-bottom: 25px;
   span {
     font-size: 48px;
   }
@@ -273,40 +357,14 @@ const Mathfield = styled.div`
   }
 `;
 
-const StyledCalculator = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  label {
-    margin-top: 25px;
-    display: block;
-    text-align: center;
-    font-weight: 600;
-  }
-  input[type="text"] {
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 10px 0;
-    text-align: center;
-    font-size: 32px;
-  }
-  form p {
-    text-align: center;
-    font-size: 32px;
-    margin: 16px 0;
-  }
-`;
-
 const MultipleChoice = styled.div`
+  width: 300px;
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-gap: 15px;
-    margin-top: 61px;
+    margin-top: 10px;
   }
   input[type="radio"] {
     opacity: 0;
@@ -331,6 +389,16 @@ const MultipleChoice = styled.div`
   input[type="submit"] {
     grid-column: 0 / 4;
   }
+  @media (max-width: 500px) {
+    width: auto;
+    .container {
+      grid-gap: 5px;
+    }
+    label {
+      font-size: 18px;
+      padding: 15px;
+    }
+  }
 `;
 
 const StyledButton = styled.button`
@@ -348,11 +416,14 @@ const StyledButton = styled.button`
     border: 2px solid #5e3399;
     color: white;
   }
+  @media (max-width: 500px) {
+    padding: 10px 5px;
+  }
 `;
 
 const Wrapper = styled.div`
   width: 200px;
-  margin: 0 auto
+  margin: 0 auto;
 `;
 
-export default Calculator;
+export default CalculatorComponent;
