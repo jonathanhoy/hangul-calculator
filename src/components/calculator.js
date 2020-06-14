@@ -13,7 +13,6 @@ class CalculatorComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      operation: 0,
       x: 0,
       y: 0,
       answer: 0,
@@ -37,37 +36,14 @@ class CalculatorComponent extends React.Component {
   }
 
   generateProblem = () => {
-    const operation = this.state.simpleNumbersToggle === true ? 1 : (Math.floor(Math.random() * 2) + 1);
-    const sys = (Math.floor(Math.random() * 2) + 1);
-    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 10) + 1;
-    const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * 10) + 1;
-
-    let answer;
-    let system;
-    let z;
+    const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
+    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 99) + 1;
+    const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * (100 - x)) + 1;
+    const answer = this.convertNumToWord((x+y), system);
     let incorrect1;
     let incorrect2;
     let incorrect3;
     let tempArr;
-
-    switch (sys) {
-      case 1:
-        system = 'sino';
-        break;
-      case 2:
-        system = 'pure';
-        break;
-    };
-    switch(operation) {
-      case 1:
-        z = x + y;
-        answer = this.convertNumToWord(z, system)
-        break;
-      case 2:
-        z = x * y;
-        answer = this.convertNumToWord(z, system)
-        break;
-    };
 
     if (this.state.simpleNumbersToggle === false) {
       const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
@@ -87,7 +63,6 @@ class CalculatorComponent extends React.Component {
     };
 
     this.setState({
-      operation,
       x,
       y,
       answer,
@@ -171,10 +146,10 @@ class CalculatorComponent extends React.Component {
         <Cheatsheet/>
         <Calculator>
           <Wrapper>
-            <Mathfield operation={this.state.operation}>
+            <Mathfield>
               <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
               <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
-              <span className="operation"><img src={svg} alt={`A${this.state.operation === 1 ? 'n addition' : ' multiplication'} icon`}/></span>
+              <span className="operation"><img src={svg} alt="An addition icon"/></span>
             </Mathfield>
           </Wrapper>
           <form action="" onSubmit={this.validate}>
@@ -385,7 +360,7 @@ const Calculator = styled.section`
 
 const Mathfield = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 60px 60px;
   border-bottom: 3px solid black;
   span {
@@ -405,10 +380,6 @@ const Mathfield = styled.div`
     width: 25px;
     height: 25px;
     grid-row: 2 / 3;
-  }
-  img {
-    transform: ${props => (props.operation === 1 ? "rotate(0deg)" : "rotate(45deg)")};
-    transition: all 0.2s;
   }
 `;
 
