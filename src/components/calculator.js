@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from './checkbox';
-import Cheatsheet from './Cheatsheet';
 import svg from '../images/noun_Math_538141.svg';
 import { fireOverviewSwal, fireFeaturesSwal } from './util/swal';
  
@@ -135,39 +134,16 @@ class CalculatorComponent extends React.Component {
     }
   }
 
-  // fireOverviewSwal = () => {
-  //   swal(
-  //     <div>
-  //       <h2>App overview</h2>
-  //       <p>The purpose of this app is to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
-  //       <p>Understanding that each system is used in different situations, the app's objective is simply to practice memorization.</p>
-  //       <p>Good luck in your studies!</p>
-  //       <p>&copy; Jonathan {currentyear}</p>
-  //     </div>
-  //   )
-  // }
-
-  // fireFeaturesSwal = () => {
-  //   swal(
-  //     <div>
-  //       <h3>Features</h3>
-  //       <p>By keeping the 'Simple numbers' setting checked, you will be limited to problems in the range of 1-10. Unchecking 'Simple numbers' will allow problems in the range of 1-100.</p>
-  //       <p>The 'Multiple choice' setting changes the answer format should you not have a Korean keyboard, or to provide a different challenge.</p>
-  //       <p>You can click/tap the Sino and Pure buttons for a reference of each number system.</p>
-  //       <p>Good luck in your studies!</p>
-  //       <p>&copy; Jonathan {currentyear}</p>
-  //     </div>
-  //   )
-  // }
-
   render() {
     return (
       <MainContainer>
         <Nav>
-          <button className="nav-overview" onClick={fireOverviewSwal}>
-            <p>Overview</p>
-          </button>
-          <button className="nav-features" onClick={fireFeaturesSwal}><p>Features</p></button>
+          <div className="nav-inner-container">
+            <button className="nav-overview" onClick={fireOverviewSwal}>
+              <p>Overview</p>
+            </button>
+            <button className="nav-features" onClick={fireFeaturesSwal}><p>Features</p></button>
+          </div>
         </Nav>
         <Calculator>
           <Wrapper>
@@ -195,25 +171,18 @@ class CalculatorComponent extends React.Component {
               this.state.multipleChoiceToggle === true &&
               <MultipleChoice>
                 <div className="container">
-                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[0]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[0]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[0]}/>
-                  <label htmlFor={this.state.multipleChoiceArr[0]}>
-                    {this.state.multipleChoiceArr[0]}
-                  </label>
-
-                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[1]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[1]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[1]}/>
-                  <label htmlFor={this.state.multipleChoiceArr[1]}>
-                    {this.state.multipleChoiceArr[1]}
-                  </label>
-                  
-                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[2]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[2]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[2]}/>
-                  <label htmlFor={this.state.multipleChoiceArr[2]}>
-                    {this.state.multipleChoiceArr[2]}
-                  </label>
-
-                  <input type="radio" name="multipleChoice" id={this.state.multipleChoiceArr[3]} onClick={this.handleMultipleChoice} value={this.state.multipleChoiceArr[3]} checked={this.state.checkedRadio == this.state.multipleChoiceArr[3]}/>
-                  <label htmlFor={this.state.multipleChoiceArr[3]}>
-                    {this.state.multipleChoiceArr[3]}
-                  </label>
+                  {
+                    this.state.multipleChoiceArr.map((item) => {
+                      return (
+                        <>
+                          <input key={item} type="radio" name="multipleChoice" id={item} onClick={this.handleMultipleChoice} value={item} checked={this.state.checkedRadio == item} />
+                          <label htmlFor={item}>
+                            {item}
+                          </label>
+                        </>
+                      )
+                    })
+                  }
                 </div>
                 <Wrapper margin="auto">
                   {this.state.response === '' && <p>&nbsp;</p>}
@@ -234,45 +203,49 @@ class CalculatorComponent extends React.Component {
           sinoToggle={this.state.sinoToggle}
           pureToggle={this.state.pureToggle}
         >
-          <div className="toggle">
-            <label htmlFor="simpleNumbersToggle">
-              <p className="simpleNumbers">Simple numbers</p>
-              <Checkbox
-                id="simpleNumbersToggle"
-                checked={this.state.simpleNumbersToggle}
-                onChange={this.handleCheckboxChange}
-              />
-            </label>
+          <div className="options-container">
+            <div className="toggle">
+              <label htmlFor="simpleNumbersToggle">
+                <p className="simpleNumbers">Simple numbers</p>
+                <Checkbox
+                  id="simpleNumbersToggle"
+                  checked={this.state.simpleNumbersToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
+            <div className="toggle">
+              <label htmlFor="multipleChoiceToggle">
+                <p className="multipleChoice">Multiple choice</p>
+                <Checkbox
+                  id="multipleChoiceToggle"
+                  checked={this.state.multipleChoiceToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
           </div>
-          <div className="toggle">
-            <label htmlFor="multipleChoiceToggle">
-              <p className="multipleChoice">Multiple choice</p>
-              <Checkbox
-                id="multipleChoiceToggle"
-                checked={this.state.multipleChoiceToggle}
-                onChange={this.handleCheckboxChange}
-              />
-            </label>
-          </div>
-          <div className="toggle">
-            <label htmlFor="sinoToggle">
-              <p className="sino">Sino-Korean</p>
-              <Checkbox
-                id="sinoToggle"
-                checked={this.state.sinoToggle}
-                onChange={this.handleCheckboxChange}
-              />
-            </label>
-          </div>
-          <div className="toggle">
-            <label htmlFor="pureToggle">
-              <p className="pure">Pure Korean</p>
-              <Checkbox
-                id="pureToggle"
-                checked={this.state.pureToggle}
-                onChange={this.handleCheckboxChange}
-              />
-            </label>
+          <div className="reference-container">
+            <div className="toggle">
+              <label htmlFor="sinoToggle">
+                <p className="sino">Sino<span className="mobileHide">-Korean</span></p>
+                <Checkbox
+                  id="sinoToggle"
+                  checked={this.state.sinoToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
+            <div className="toggle">
+              <label htmlFor="pureToggle">
+                <p className="pure">Pure <span className="mobileHide">Korean</span></p>
+                <Checkbox
+                  id="pureToggle"
+                  checked={this.state.pureToggle}
+                  onChange={this.handleCheckboxChange}
+                />
+              </label>
+            </div>
           </div>
           {
             this.state.sinoToggle === true && (
@@ -341,7 +314,7 @@ class CalculatorComponent extends React.Component {
 const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     grid-column-gap: 10px;
@@ -349,16 +322,22 @@ const MainContainer = styled.div`
 `;
 
 const Nav = styled.nav`
-  margin: 20px 0;
+  margin: 25px 0;
+  .nav-inner-container {
+    background: Gainsboro;
+    padding: 25px;
+    padding-right: 50px;
+    border-radius: 25px;
+    display: inline-block;
+  }
   .nav-overview, .nav-features {
-    margin-top: 15px;
+    margin: 5px 0;
     cursor: pointer;
     background: none;
     border: none;
     font-weight: 600;
     font-size: 18px;
     display: block;
-    /* margin-bottom: 10px; */
     padding: 0;
     p {
       margin: 0;
@@ -368,6 +347,23 @@ const Nav = styled.nav`
     }
     p:hover {
       color: #5e3399;
+    }
+  }
+  @media (max-width: 599px) {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    margin-bottom: 0;
+    margin-top: 10px;
+    .nav-overview, .nav-features {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    .nav-inner-container {
+      background: Gainsboro;
+      padding: 15px;
+      padding-right: 25px;
+      border-radius: 15px;
+      margin-bottom: 5px;
     }
   }
 `;
@@ -408,7 +404,7 @@ const Calculator = styled.section`
     position: absolute;
     width: 1px;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     grid-column: 2 / 3;
     grid-row: 1 / 3;
     margin-top: 30px;
@@ -478,7 +474,7 @@ const MultipleChoice = styled.div`
   input[type="submit"] {
     grid-column: 0 / 4;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     width: auto;
     .container {
       grid-gap: 5px;
@@ -492,11 +488,13 @@ const MultipleChoice = styled.div`
 `;
 
 const Settings = styled.section`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   position: relative;
+  .options-container, .reference-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
   .toggle {
     margin-top: 5px;
   }
@@ -523,14 +521,31 @@ const Settings = styled.section`
   p.pure {
     color: ${props => (props.pureToggle === true ? 'white' : 'black')}
   }
-  @media (max-width: 500px) {
-    grid-row: 1 / 2;
+  @media (max-width: 599px) {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
     width: 100%;
+    margin-top: 0;
+    label {
+      width: 100%;
+      padding: 10px;
+    }
     .toggle {
       width: auto;
       margin-top: 5px;
       width: 100%;
     }
+    .reference-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 5px;
+    }
+  }
+  .mobileBlock {
+    display: inline-block;
+  }
+  .mobileHide {
+    display: none;
   }
 `;
 
@@ -542,10 +557,11 @@ const ListContainer = styled.div`
   span {
     font-weight: 600;
   }
-  @media (max-width: 500px) {
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
+  @media (max-width: 599px) {
+    top: 155px;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
   }
 `;
 
@@ -555,15 +571,11 @@ const List = styled.ul`
   padding-left: 0;
   list-style: none;
   width: ${props => (props.digits === 'single' ? '55px' : '75px')};
-  margin-right: ${props => (props.digits === 'single' ? '30px' : '0')};
+  margin-right: ${props => (props.digits === 'single' ? '45px' : '0')};
   li {
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
-  }
-  @media (max-width: 500px) {
-    width: ${props => (props.digits === 'single' ? '50px' : '70px')};
-    margin-right: ${props => (props.digits === 'single' ? '15px' : '0')};
   }
 `;
 
@@ -582,7 +594,7 @@ export const StyledButton = styled.button`
     border: 3px solid #5E3399;
     color: white;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     padding: 10px 5px;
   }
 `;

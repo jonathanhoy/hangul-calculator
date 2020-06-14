@@ -15,7 +15,7 @@ const StyledHeader = styled.header`
     margin: 0;
     color: white;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     .mobileBlock {
       display: inline-block;
     }
