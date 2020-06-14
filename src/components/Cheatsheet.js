@@ -145,10 +145,15 @@ const CheatsheetContainer = styled.section`
       margin-top: 0;
     }
     grid-row: 2 / 3;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5px;
+    label {
+      text-align: center;
+      width: 100%;
+      display: inline-block;
+    }
     .mobileBlock {
       display: inline-block;
     }
@@ -170,7 +175,7 @@ const ListContainer = styled.div`
   left: 0;
   display: flex;
   @media (max-width: 500px) {
-    top: 40px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
   }

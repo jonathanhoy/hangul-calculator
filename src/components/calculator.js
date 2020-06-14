@@ -237,7 +237,7 @@ const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   @media (max-width: 500px) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     grid-column-gap: 10px;
   }
