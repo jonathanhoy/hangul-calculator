@@ -6,6 +6,9 @@ import Checkbox from './Checkbox';
 import Cheatsheet from './Cheatsheet';
 import svg from '../images/noun_Math_538141.svg';
  
+const year = new Date();
+const currentyear = year.getFullYear();
+
 class CalculatorComponent extends React.Component {
   constructor() {
     super();
@@ -146,6 +149,8 @@ class CalculatorComponent extends React.Component {
         <p>By keeping the 'Simple numbers' setting checked, users will be limited to addition problems in the range of 1-10. Unchecking 'Simple numbers' will allow addition and multiplication problems in the range of 1-100.</p>
         <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if the user does not have a Korean keyboard.</p>
         <p>Users can hover over (desktop) or tap on (mobile devices) the Sino and Pure legends for a reference of each number system.</p>
+        <p>Good luck in your studies!</p>
+        <p>&copy; Jonathan {currentyear}</p>
       </div>
     )
   }
@@ -285,6 +290,15 @@ const Settings = styled.section`
     margin: 5px 0;
     justify-content: flex-start;
     align-items: stretch;
+    .introduction {
+      margin: 10px 0;
+      padding: 0;
+      width: 100%;
+    }
+    .introduction p {
+      font-size: 16px;
+      margin: 0;
+    }
   }
 `;
 

@@ -613,7 +613,8 @@ section {
 }
 
 .swal-footer {
-  margin-top: 32px;
+  margin-top: 0;
+  padding-top: 0;
   text-align: center;
 }
 
