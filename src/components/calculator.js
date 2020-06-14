@@ -205,7 +205,7 @@ class CalculatorComponent extends React.Component {
                     {this.state.multipleChoiceArr[3]}
                   </label>
                 </div>
-                <Wrapper>
+                <Wrapper margin="auto">
                   {this.state.response === '' && <p>&nbsp;</p>}
                   {this.state.response === 'correct' && <p>맞아요! 🎉</p>}
                   {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
@@ -403,12 +403,11 @@ const Mathfield = styled.div`
 `;
 
 const MultipleChoice = styled.div`
-  width: 300px;
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-gap: 15px;
+    grid-gap: 5px;
     margin-top: 10px;
     margin-bottom: 26px;
   }
@@ -419,7 +418,7 @@ const MultipleChoice = styled.div`
   }
   label {
     display: inline-block;
-    padding: 20px;
+    padding: 5px;
     border: 3px solid #000;
     border-radius: 5px;
     margin-top: 0;
@@ -473,6 +472,7 @@ const StyledButton = styled.button`
 
 export const Wrapper = styled.div`
   width: 200px;
+  margin: ${props => (props.margin === 'auto' ? '0 auto' : '0')}
 `;
 
 export default CalculatorComponent;
