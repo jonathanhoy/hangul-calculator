@@ -13,7 +13,6 @@ class CalculatorComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      operation: 0,
       x: 0,
       y: 0,
       answer: 0,
@@ -37,37 +36,14 @@ class CalculatorComponent extends React.Component {
   }
 
   generateProblem = () => {
-    const operation = this.state.simpleNumbersToggle === true ? 1 : (Math.floor(Math.random() * 2) + 1);
-    const sys = (Math.floor(Math.random() * 2) + 1);
-    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 10) + 1;
-    const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * 10) + 1;
-
-    let answer;
-    let system;
-    let z;
+    const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
+    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 99) + 1;
+    const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * (100 - x)) + 1;
+    const answer = this.convertNumToWord((x+y), system);
     let incorrect1;
     let incorrect2;
     let incorrect3;
     let tempArr;
-
-    switch (sys) {
-      case 1:
-        system = 'sino';
-        break;
-      case 2:
-        system = 'pure';
-        break;
-    };
-    switch(operation) {
-      case 1:
-        z = x + y;
-        answer = this.convertNumToWord(z, system)
-        break;
-      case 2:
-        z = x * y;
-        answer = this.convertNumToWord(z, system)
-        break;
-    };
 
     if (this.state.simpleNumbersToggle === false) {
       const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
@@ -87,7 +63,6 @@ class CalculatorComponent extends React.Component {
     };
 
     this.setState({
-      operation,
       x,
       y,
       answer,
@@ -156,9 +131,9 @@ class CalculatorComponent extends React.Component {
         <p>The purpose of this app is to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
         <p>Understanding that each system is used in different situations, the app's objective is purely to practice memorization.</p>
         <h3>Features</h3>
-        <p>By keeping the 'Simple numbers' setting checked, you will be limited to addition problems in the range of 1-10. Unchecking 'Simple numbers' will allow addition and multiplication problems in the range of 1-100.</p>
+        <p>By keeping the 'Simple numbers' setting checked, you will be limited to problems in the range of 1-10. Unchecking 'Simple numbers' will allow problems in the range of 1-100.</p>
         <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if you do not have a Korean keyboard.</p>
-        <p>You can hover over (desktop) or tap on (mobile devices) the Sino and Pure legends for a reference of each number system.</p>
+        <p>You can click/tap the Sino and Pure legends for a reference of each number system.</p>
         <p>Good luck in your studies!</p>
         <p>&copy; Jonathan {currentyear}</p>
       </div>
@@ -171,10 +146,10 @@ class CalculatorComponent extends React.Component {
         <Cheatsheet/>
         <Calculator>
           <Wrapper>
-            <Mathfield operation={this.state.operation}>
+            <Mathfield>
               <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
               <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
-              <span className="operation"><img src={svg} alt={`A${this.state.operation === 1 ? 'n addition' : ' multiplication'} icon`}/></span>
+              <span className="operation"><img src={svg} alt="An addition icon"/></span>
             </Mathfield>
           </Wrapper>
           <form action="" onSubmit={this.validate}>
@@ -262,7 +237,7 @@ const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   @media (max-width: 500px) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     grid-column-gap: 10px;
   }
@@ -385,7 +360,7 @@ const Calculator = styled.section`
 
 const Mathfield = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: auto 1fr;
   grid-template-rows: 60px 60px;
   border-bottom: 3px solid black;
   span {
@@ -405,10 +380,6 @@ const Mathfield = styled.div`
     width: 25px;
     height: 25px;
     grid-row: 2 / 3;
-  }
-  img {
-    transform: ${props => (props.operation === 1 ? "rotate(0deg)" : "rotate(45deg)")};
-    transition: all 0.2s;
   }
 `;
 
@@ -461,10 +432,10 @@ const MultipleChoice = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
-  background: ${props => (props.theme === "purple" ? "#8353c6" : "white")};
-  color: ${props => (props.theme === "purple" ? "white" : "#8353c6")};;
-  border: 3px solid #8353c6;
+export const StyledButton = styled.button`
+  background: ${props => (props.theme === "purple" ? "#5E3399" : "white")};
+  color: ${props => (props.theme === "purple" ? "white" : "#5E3399")};;
+  border: 3px solid #5E3399;
   border-radius: 5px;
   width: 100%;
   margin: 10px 0;
