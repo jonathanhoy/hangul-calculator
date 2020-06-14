@@ -597,3 +597,36 @@ pre tt:after {
 section {
   margin: 25px 0;
 }
+
+.swal-modal {
+  width: 750px;
+}
+
+@media (max-width: 500px) {
+  .swal-modal {
+    width: 90%;
+  }
+}
+
+.swal-content {
+  text-align: left;
+}
+
+.swal-footer {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 3px;
+  font-size: 18px;
+  background-color: #8353c6;
+  border: 3px solid #8353c6;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.swal-button:not([disabled]):hover {
+  background-color: #5e3399;
+  border: 3px solid #5e3399;
+}
