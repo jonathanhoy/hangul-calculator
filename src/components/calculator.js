@@ -456,7 +456,7 @@ const MultipleChoice = styled.div`
     }
     label {
       font-size: 18px;
-      padding: 15px;
+      padding: 15px 10px;
     }
   }
 `;
