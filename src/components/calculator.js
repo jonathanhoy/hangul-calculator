@@ -267,6 +267,7 @@ const Settings = styled.section`
     display: block;
     margin-left: auto;
     margin-bottom: 18px;
+    padding: 0;
     p {
       margin: 0;
       text-align: right;
@@ -292,7 +293,6 @@ const Settings = styled.section`
     align-items: stretch;
     .introduction {
       margin: 10px 0;
-      padding: 0;
       width: 100%;
     }
     .introduction p {
