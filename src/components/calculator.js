@@ -30,6 +30,12 @@ class CalculatorComponent extends React.Component {
     this.generateProblem();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.simpleNumbersToggle !== prevState.simpleNumbersToggle) {
+      this.generateProblem();
+    }
+  }
+
   generateProblem = () => {
     const operation = this.state.simpleNumbersToggle === true ? 1 : (Math.floor(Math.random() * 2) + 1);
     const sys = (Math.floor(Math.random() * 2) + 1);
@@ -131,7 +137,11 @@ class CalculatorComponent extends React.Component {
     })
   }
 
-  handleCheckboxChange = event => this.setState({ [event.target.id]: event.target.checked })
+  handleCheckboxChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.checked
+    })
+  }
 
   convertNumToWord = (num, sys) => {
     if (words[num] !== undefined) {
@@ -222,7 +232,7 @@ class CalculatorComponent extends React.Component {
           <button className="introduction" onClick={this.fireSwal}><p>Introduction</p></button>
           <Toggles simpleNumbersToggle={this.state.simpleNumbersToggle} multipleChoiceToggle={this.state.multipleChoiceToggle}>
             <div className="toggleContainer">
-              <label>
+              <label htmlFor="simpleNumbersToggle">
                 <p className="simpleNumbers">Simple numbers</p>
                 <Checkbox
                   id="simpleNumbersToggle"
@@ -232,7 +242,7 @@ class CalculatorComponent extends React.Component {
               </label>
             </div>
             <div className="toggleContainer">
-              <label>
+              <label htmlFor="multipleChoiceToggle">
                 <p className="multipleChoice">Multiple choice</p>
                 <Checkbox
                   id="multipleChoiceToggle"
