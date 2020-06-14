@@ -102,7 +102,7 @@ class Cheatsheet extends React.Component {
                   <li><span>70</span><span>일흔</span></li>
                   <li><span>80</span><span>여든</span></li>
                   <li><span>90</span><span>아흔</span></li>
-                  <li><span>10</span><span>백</span></li>
+                  <li><span>100</span><span>백</span></li>
                 </List>
               </ListContainer>
             )
