@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import swal from '@sweetalert/with-react';
 import words from './mapping';
-
 import Checkbox from './Checkbox';
 import Cheatsheet from './Cheatsheet';
 import svg from '../images/noun_Math_538141.svg';
  
+const year = new Date();
+const currentyear = year.getFullYear();
+
 class CalculatorComponent extends React.Component {
   constructor() {
     super();
@@ -136,6 +139,22 @@ class CalculatorComponent extends React.Component {
     }
   }
 
+  fireSwal = () => {
+    swal(
+      <div>
+        <h2>App overview</h2>
+        <p>The purpose of this app is to help practice memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
+        <p>Understanding that each system is used in different situations, the app's objective is purely to help with memorization.</p>
+        <h3>Features</h3>
+        <p>By keeping the 'Simple numbers' setting checked, users will be limited to addition problems in the range of 1-10. Unchecking 'Simple numbers' will allow addition and multiplication problems in the range of 1-100.</p>
+        <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if the user does not have a Korean keyboard.</p>
+        <p>Users can hover over (desktop) or tap on (mobile devices) the Sino and Pure legends for a reference of each number system.</p>
+        <p>Good luck in your studies!</p>
+        <p>&copy; Jonathan {currentyear}</p>
+      </div>
+    )
+  }
+
   render() {
     return (
       <MainContainer>
@@ -200,6 +219,7 @@ class CalculatorComponent extends React.Component {
           </Wrapper>
         </Calculator>
         <Settings>
+          <button className="introduction" onClick={this.fireSwal}><p>Introduction</p></button>
           <Toggles simpleNumbersToggle={this.state.simpleNumbersToggle} multipleChoiceToggle={this.state.multipleChoiceToggle}>
             <div className="toggleContainer">
               <label>
@@ -239,9 +259,24 @@ const MainContainer = styled.div`
 `;
 
 const Settings = styled.section`
-  justify-self: end;
-  display: flex;
-  justify-content: flex-end;
+  .introduction {
+    background: none;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+    margin-left: auto;
+    margin-bottom: 18px;
+    p {
+      margin: 0;
+      text-align: right;
+      color: rgba(0,0,0,0.8);
+      transition: all 0.2s;
+    }
+    p:hover {
+      color: #5e3399;
+    }
+  }
   p {
     margin-right: 10px;
     display: inline-block;
@@ -255,6 +290,15 @@ const Settings = styled.section`
     margin: 5px 0;
     justify-content: flex-start;
     align-items: stretch;
+    .introduction {
+      margin: 10px 0;
+      padding: 0;
+      width: 100%;
+    }
+    .introduction p {
+      font-size: 16px;
+      margin: 0;
+    }
   }
 `;
 
