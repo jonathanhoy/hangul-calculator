@@ -143,12 +143,12 @@ class CalculatorComponent extends React.Component {
     swal(
       <div>
         <h2>App overview</h2>
-        <p>The purpose of this app is to help practice memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
-        <p>Understanding that each system is used in different situations, the app's objective is purely to help with memorization.</p>
+        <p>The purpose of this app is to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
+        <p>Understanding that each system is used in different situations, the app's objective is purely to practice memorization.</p>
         <h3>Features</h3>
-        <p>By keeping the 'Simple numbers' setting checked, users will be limited to addition problems in the range of 1-10. Unchecking 'Simple numbers' will allow addition and multiplication problems in the range of 1-100.</p>
-        <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if the user does not have a Korean keyboard.</p>
-        <p>Users can hover over (desktop) or tap on (mobile devices) the Sino and Pure legends for a reference of each number system.</p>
+        <p>By keeping the 'Simple numbers' setting checked, you will be limited to addition problems in the range of 1-10. Unchecking 'Simple numbers' will allow addition and multiplication problems in the range of 1-100.</p>
+        <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if you do not have a Korean keyboard.</p>
+        <p>You can hover over (desktop) or tap on (mobile devices) the Sino and Pure legends for a reference of each number system.</p>
         <p>Good luck in your studies!</p>
         <p>&copy; Jonathan {currentyear}</p>
       </div>
