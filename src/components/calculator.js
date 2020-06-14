@@ -407,7 +407,7 @@ const MultipleChoice = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-gap: 5px;
+    grid-gap: 10px;
     margin-top: 10px;
     margin-bottom: 26px;
   }
@@ -442,6 +442,7 @@ const MultipleChoice = styled.div`
     width: auto;
     .container {
       grid-gap: 5px;
+      grid-template-columns: 1fr 1fr;
     }
     label {
       font-size: 18px;
