@@ -432,10 +432,10 @@ const MultipleChoice = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
-  background: ${props => (props.theme === "purple" ? "#8353c6" : "white")};
-  color: ${props => (props.theme === "purple" ? "white" : "#8353c6")};;
-  border: 3px solid #8353c6;
+export const StyledButton = styled.button`
+  background: ${props => (props.theme === "purple" ? "#5E3399" : "white")};
+  color: ${props => (props.theme === "purple" ? "white" : "#5E3399")};;
+  border: 3px solid #5E3399;
   border-radius: 5px;
   width: 100%;
   margin: 10px 0;
