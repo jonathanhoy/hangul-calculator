@@ -132,8 +132,8 @@ class CalculatorComponent extends React.Component {
         <p>Understanding that each system is used in different situations, the app's objective is purely to practice memorization.</p>
         <h3>Features</h3>
         <p>By keeping the 'Simple numbers' setting checked, you will be limited to problems in the range of 1-10. Unchecking 'Simple numbers' will allow problems in the range of 1-100.</p>
-        <p>The 'Multiple choice' setting changes the answer format to provide a different challenge or if you do not have a Korean keyboard.</p>
-        <p>You can click/tap the Sino and Pure legends for a reference of each number system.</p>
+        <p>The 'Multiple choice' setting changes the answer format should you not have a Korean keyboard, or to provide a different challenge.</p>
+        <p>You can click/tap the Sino and Pure buttons for a reference of each number system.</p>
         <p>Good luck in your studies!</p>
         <p>&copy; Jonathan {currentyear}</p>
       </div>
