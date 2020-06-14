@@ -369,6 +369,7 @@ const Calculator = styled.section`
     grid-row: 1 / 3;
     margin-top: 30px;
     margin-bottom: 0;
+    align-items: flex-end;
   }
 `;
 
@@ -377,7 +378,6 @@ const Mathfield = styled.div`
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 60px 60px;
   border-bottom: 3px solid black;
-  margin-bottom: 25px;
   span {
     font-size: 48px;
   }
@@ -473,7 +473,6 @@ const StyledButton = styled.button`
 
 export const Wrapper = styled.div`
   width: 200px;
-  margin: 0 auto;
 `;
 
 export default CalculatorComponent;
