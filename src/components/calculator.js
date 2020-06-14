@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import swal from '@sweetalert/with-react';
-import words from './mapping';
-import Checkbox from './Checkbox';
+import numToWordsMap from './util/mapping';
+import Checkbox from './checkbox';
 import Cheatsheet from './Cheatsheet';
 import svg from '../images/noun_Math_538141.svg';
+import { fireOverviewSwal, fireFeaturesSwal } from './util/swal';
  
-const year = new Date();
-const currentyear = year.getFullYear();
-
 class CalculatorComponent extends React.Component {
   constructor() {
     super();
@@ -20,6 +17,8 @@ class CalculatorComponent extends React.Component {
       system: '',
       simpleNumbersToggle: true,
       multipleChoiceToggle: false,
+      sinoToggle: false,
+      pureToggle: false,
       multipleChoiceArr: [],
       checkedRadio: null
     }
@@ -46,7 +45,7 @@ class CalculatorComponent extends React.Component {
     let tempArr;
 
     if (this.state.simpleNumbersToggle === false) {
-      const shuffledArr = this.shuffleArray(Object.entries(words).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
+      const shuffledArr = this.shuffleArray(Object.entries(numToWordsMap).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
       [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
       incorrect1 = incorrect1[1][system];
       incorrect2 = incorrect2[1][system];
@@ -113,37 +112,63 @@ class CalculatorComponent extends React.Component {
   }
 
   handleCheckboxChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.checked
-    })
-  }
-
-  convertNumToWord = (num, sys) => {
-    if (words[num] !== undefined) {
-      return words[num][sys];
+    if (e.target.id === 'sinoToggle') {
+      this.setState({
+        pureToggle: false,
+        [e.target.id]: e.target.checked,
+      })
+    } else if (e.target.id === 'pureToggle') {
+      this.setState({
+        sinoToggle: false,
+        [e.target.id]: e.target.checked,
+      })
+    } else {
+      this.setState({
+        [e.target.id]: e.target.checked
+      })
     }
   }
 
-  fireSwal = () => {
-    swal(
-      <div>
-        <h2>App overview</h2>
-        <p>The purpose of this app is to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
-        <p>Understanding that each system is used in different situations, the app's objective is purely to practice memorization.</p>
-        <h3>Features</h3>
-        <p>By keeping the 'Simple numbers' setting checked, you will be limited to problems in the range of 1-10. Unchecking 'Simple numbers' will allow problems in the range of 1-100.</p>
-        <p>The 'Multiple choice' setting changes the answer format should you not have a Korean keyboard, or to provide a different challenge.</p>
-        <p>You can click/tap the Sino and Pure buttons for a reference of each number system.</p>
-        <p>Good luck in your studies!</p>
-        <p>&copy; Jonathan {currentyear}</p>
-      </div>
-    )
+  convertNumToWord = (num, sys) => {
+    if (numToWordsMap[num] !== undefined) {
+      return numToWordsMap[num][sys];
+    }
   }
+
+  // fireOverviewSwal = () => {
+  //   swal(
+  //     <div>
+  //       <h2>App overview</h2>
+  //       <p>The purpose of this app is to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
+  //       <p>Understanding that each system is used in different situations, the app's objective is simply to practice memorization.</p>
+  //       <p>Good luck in your studies!</p>
+  //       <p>&copy; Jonathan {currentyear}</p>
+  //     </div>
+  //   )
+  // }
+
+  // fireFeaturesSwal = () => {
+  //   swal(
+  //     <div>
+  //       <h3>Features</h3>
+  //       <p>By keeping the 'Simple numbers' setting checked, you will be limited to problems in the range of 1-10. Unchecking 'Simple numbers' will allow problems in the range of 1-100.</p>
+  //       <p>The 'Multiple choice' setting changes the answer format should you not have a Korean keyboard, or to provide a different challenge.</p>
+  //       <p>You can click/tap the Sino and Pure buttons for a reference of each number system.</p>
+  //       <p>Good luck in your studies!</p>
+  //       <p>&copy; Jonathan {currentyear}</p>
+  //     </div>
+  //   )
+  // }
 
   render() {
     return (
       <MainContainer>
-        <Cheatsheet/>
+        <Nav>
+          <button className="nav-overview" onClick={fireOverviewSwal}>
+            <p>Overview</p>
+          </button>
+          <button className="nav-features" onClick={fireFeaturesSwal}><p>Features</p></button>
+        </Nav>
         <Calculator>
           <Wrapper>
             <Mathfield>
@@ -203,30 +228,110 @@ class CalculatorComponent extends React.Component {
             <StyledButton onClick={this.generateProblem}>Next</StyledButton>
           </Wrapper>
         </Calculator>
-        <Settings>
-          <button className="introduction" onClick={this.fireSwal}><p>Introduction</p></button>
-          <Toggles simpleNumbersToggle={this.state.simpleNumbersToggle} multipleChoiceToggle={this.state.multipleChoiceToggle}>
-            <div className="toggleContainer">
-              <label htmlFor="simpleNumbersToggle">
-                <p className="simpleNumbers">Simple numbers</p>
-                <Checkbox
-                  id="simpleNumbersToggle"
-                  checked={this.state.simpleNumbersToggle}
-                  onChange={this.handleCheckboxChange}
-                />
-              </label>
-            </div>
-            <div className="toggleContainer">
-              <label htmlFor="multipleChoiceToggle">
-                <p className="multipleChoice">Multiple choice</p>
-                <Checkbox
-                  id="multipleChoiceToggle"
-                  checked={this.state.multipleChoiceToggle}
-                  onChange={this.handleCheckboxChange}
-                />
-              </label>
-            </div>
-          </Toggles>
+        <Settings
+          simpleNumbersToggle={this.state.simpleNumbersToggle}
+          multipleChoiceToggle={this.state.multipleChoiceToggle}
+          sinoToggle={this.state.sinoToggle}
+          pureToggle={this.state.pureToggle}
+        >
+          <div className="toggle">
+            <label htmlFor="simpleNumbersToggle">
+              <p className="simpleNumbers">Simple numbers</p>
+              <Checkbox
+                id="simpleNumbersToggle"
+                checked={this.state.simpleNumbersToggle}
+                onChange={this.handleCheckboxChange}
+              />
+            </label>
+          </div>
+          <div className="toggle">
+            <label htmlFor="multipleChoiceToggle">
+              <p className="multipleChoice">Multiple choice</p>
+              <Checkbox
+                id="multipleChoiceToggle"
+                checked={this.state.multipleChoiceToggle}
+                onChange={this.handleCheckboxChange}
+              />
+            </label>
+          </div>
+          <div className="toggle">
+            <label htmlFor="sinoToggle">
+              <p className="sino">Sino-Korean</p>
+              <Checkbox
+                id="sinoToggle"
+                checked={this.state.sinoToggle}
+                onChange={this.handleCheckboxChange}
+              />
+            </label>
+          </div>
+          <div className="toggle">
+            <label htmlFor="pureToggle">
+              <p className="pure">Pure Korean</p>
+              <Checkbox
+                id="pureToggle"
+                checked={this.state.pureToggle}
+                onChange={this.handleCheckboxChange}
+              />
+            </label>
+          </div>
+          {
+            this.state.sinoToggle === true && (
+              <ListContainer>
+                <List digits="single">
+                  <li><span>1</span><span>일</span></li>
+                  <li><span>2</span><span>이</span></li>
+                  <li><span>3</span><span>삼</span></li>
+                  <li><span>4</span><span>사</span></li>
+                  <li><span>5</span><span>오</span></li>
+                  <li><span>6</span><span>육</span></li>
+                  <li><span>7</span><span>칠</span></li>
+                  <li><span>8</span><span>팔</span></li>
+                  <li><span>9</span><span>구</span></li>
+                </List>
+                <List>
+                  <li><span>10</span><span>십</span></li>
+                  <li><span>20</span><span>이십</span></li>
+                  <li><span>30</span><span>삼십</span></li>
+                  <li><span>40</span><span>사십</span></li>
+                  <li><span>50</span><span>오십</span></li>
+                  <li><span>60</span><span>육십</span></li>
+                  <li><span>70</span><span>칠십</span></li>
+                  <li><span>80</span><span>팔십</span></li>
+                  <li><span>90</span><span>구십</span></li>
+                  <li><span>100</span><span>백</span></li>
+                </List>
+              </ListContainer>
+            )
+          }
+          {
+            this.state.pureToggle === true && (
+              <ListContainer>
+                <List digits="single">
+                  <li><span>1</span><span>하나</span></li>
+                  <li><span>2</span><span>둘</span></li>
+                  <li><span>3</span><span>셋</span></li>
+                  <li><span>4</span><span>넷</span></li>
+                  <li><span>5</span><span>다섯</span></li>
+                  <li><span>6</span><span>여섯</span></li>
+                  <li><span>7</span><span>일곱</span></li>
+                  <li><span>8</span><span>여덟</span></li>
+                  <li><span>9</span><span>아홉</span></li>
+                </List>
+                <List>
+                  <li><span>10</span><span>열</span></li>
+                  <li><span>20</span><span>스물</span></li>
+                  <li><span>30</span><span>서른</span></li>
+                  <li><span>40</span><span>마흔</span></li>
+                  <li><span>50</span><span>쉰</span></li>
+                  <li><span>60</span><span>예순</span></li>
+                  <li><span>70</span><span>일흔</span></li>
+                  <li><span>80</span><span>여든</span></li>
+                  <li><span>90</span><span>아흔</span></li>
+                  <li><span>100</span><span>백</span></li>
+                </List>
+              </ListContainer>
+            )
+          }
         </Settings>
       </MainContainer>
     )
@@ -243,72 +348,26 @@ const MainContainer = styled.div`
   }
 `;
 
-const Settings = styled.section`
-  .introduction {
+const Nav = styled.nav`
+  margin: 20px 0;
+  .nav-overview, .nav-features {
+    margin-top: 15px;
+    cursor: pointer;
     background: none;
     border: none;
     font-weight: 600;
     font-size: 18px;
     display: block;
-    margin-left: auto;
-    margin-bottom: 18px;
+    /* margin-bottom: 10px; */
     padding: 0;
     p {
       margin: 0;
-      text-align: right;
+      text-align: left;
       color: rgba(0,0,0,0.8);
       transition: all 0.2s;
     }
     p:hover {
       color: #5e3399;
-    }
-  }
-  p {
-    margin-right: 10px;
-    display: inline-block;
-  }
-  p, span {
-    font-weight: 600;
-  }
-  @media (max-width: 500px) {
-    grid-row: 1 / 2;
-    width: 100%;
-    margin: 5px 0;
-    justify-content: flex-start;
-    align-items: stretch;
-    .introduction {
-      margin: 10px 0;
-      width: 100%;
-    }
-    .introduction p {
-      font-size: 16px;
-      margin: 0;
-    }
-  }
-`;
-
-const Toggles = styled.div`
-  text-align: right;
-  @media (max-width: 500px) {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .toggleContainer {
-      width: auto;
-      position: relative;
-      margin-top: 5px;
-      width: 100%;
-      p {
-        margin: 0;
-        padding: 10px;
-      }
-      p.simpleNumbers {
-        color: ${props => (props.simpleNumbersToggle === true ? 'white' : '#5e3399')}
-      }
-      p.multipleChoice {
-        color: ${props => (props.multipleChoiceToggle === true ? 'white' : '#5e3399')}
-      }
     }
   }
 `;
@@ -429,6 +488,82 @@ const MultipleChoice = styled.div`
       font-size: 18px;
       padding: 15px 10px;
     }
+  }
+`;
+
+const Settings = styled.section`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  .toggle {
+    margin-top: 5px;
+  }
+  label {
+    position: relative;
+    padding: 5px;
+    width: 175px;
+    display: inline-block;
+  }
+  p {
+    display: inline-block;
+    font-weight: 600;
+    margin: 0;
+  }
+  p.simpleNumbers {
+    color: ${props => (props.simpleNumbersToggle === true ? 'white' : 'black')}
+  }
+  p.multipleChoice {
+    color: ${props => (props.multipleChoiceToggle === true ? 'white' : 'black')}
+  }
+  p.sino {
+    color: ${props => (props.sinoToggle === true ? 'white' : 'black')}
+  }
+  p.pure {
+    color: ${props => (props.pureToggle === true ? 'white' : 'black')}
+  }
+  @media (max-width: 500px) {
+    grid-row: 1 / 2;
+    width: 100%;
+    .toggle {
+      width: auto;
+      margin-top: 5px;
+      width: 100%;
+    }
+  }
+`;
+
+const ListContainer = styled.div`
+  position: absolute;
+  top: 175px;
+  right: 0;
+  display: flex;
+  span {
+    font-weight: 600;
+  }
+  @media (max-width: 500px) {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  list-style: none;
+  width: ${props => (props.digits === 'single' ? '55px' : '75px')};
+  margin-right: ${props => (props.digits === 'single' ? '30px' : '0')};
+  li {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  @media (max-width: 500px) {
+    width: ${props => (props.digits === 'single' ? '50px' : '70px')};
+    margin-right: ${props => (props.digits === 'single' ? '15px' : '0')};
   }
 `;
 
