@@ -159,10 +159,10 @@ class CalculatorComponent extends React.Component {
               (
                 <Wrapper>
                   <label htmlFor="input">Answer</label>
-                  <input type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input} placeholder="Answer"/>
+                  <input aria-label={`Type answer here`} type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input} placeholder="Answer"/>
                   {this.state.response === '' && <p>&nbsp;</p>}
-                  {this.state.response === 'correct' && <p>맞아요! 🎉</p> }
-                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
+                  {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p> }
+                  {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
                   <StyledButton type="submit" theme="purple">Check</StyledButton>
                 </Wrapper>
               )
@@ -175,7 +175,7 @@ class CalculatorComponent extends React.Component {
                     this.state.multipleChoiceArr.map((item) => {
                       return (
                         <>
-                          <input key={item} type="radio" name="multipleChoice" id={item} onClick={this.handleMultipleChoice} value={item} checked={this.state.checkedRadio == item} />
+                          <input aria-label={`Input for ${item}`} key={item} type="radio" name="multipleChoice" id={item} onClick={this.handleMultipleChoice} value={item} checked={this.state.checkedRadio === item} />
                           <label htmlFor={item}>
                             {item}
                           </label>
@@ -186,8 +186,8 @@ class CalculatorComponent extends React.Component {
                 </div>
                 <Wrapper margin="auto">
                   {this.state.response === '' && <p>&nbsp;</p>}
-                  {this.state.response === 'correct' && <p>맞아요! 🎉</p>}
-                  {this.state.response === 'wrong' && <p>❗{this.state.answer}❗</p>}
+                  {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
+                  {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
                   <StyledButton type="submit" theme="purple">Check</StyledButton>
                 </Wrapper>
               </MultipleChoice>
