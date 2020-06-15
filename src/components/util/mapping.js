@@ -1,4 +1,4 @@
-const words = {
+const numtoWordsMap = {
   1: {
     sino: '일',
     pure: '하나',
@@ -401,4 +401,4 @@ const words = {
   },
 }
 
-export default words;
+export default numtoWordsMap;

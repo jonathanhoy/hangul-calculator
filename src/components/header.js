@@ -1,4 +1,3 @@
-import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import styled from "styled-components"
@@ -15,7 +14,7 @@ const StyledHeader = styled.header`
     margin: 0;
     color: white;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 599px) {
     .mobileBlock {
       display: inline-block;
     }
