@@ -326,7 +326,6 @@ const Nav = styled.nav`
   .nav-inner-container {
     background: Gainsboro;
     padding: 25px;
-    padding-right: 50px;
     border-radius: 25px;
     display: inline-block;
   }
@@ -361,7 +360,6 @@ const Nav = styled.nav`
     .nav-inner-container {
       background: Gainsboro;
       padding: 15px;
-      padding-right: 25px;
       border-radius: 15px;
       margin-bottom: 5px;
     }
