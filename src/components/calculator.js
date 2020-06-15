@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import numToWordsMap from './util/mapping.js';
-import Checkbox from './checkbox.js';
+import numToWordsMap from './util/mapping';
+import Checkbox from "./checkbox";
 import svg from '../images/noun_Math_538141.svg';
-import { fireOverviewSwal, fireFeaturesSwal } from './util/swal.js';
+import { fireOverviewSwal, fireFeaturesSwal } from './util/swal';
  
 class CalculatorComponent extends React.Component {
   constructor() {
