@@ -5,7 +5,7 @@
 
 ## App overview
 
-I built this app to help with memorizing Korean numbers in both the Sino and Pure/Native number systems. Understanding that each system is used in different situations, the app's intention is simply to practice memorization.
+I built this app to help those who are learning Korean with memorizing Korean numbers in both the Sino and Pure/Native number systems. Understanding that each system is used in different situations, the app's intention is simply to practice memorization.
 
 The app generates a math problem using numbers randomly picked from 1-100. The app compares the answer stored in state to the user's input. If the user is correct, they are notified. If the user is incorrect, they are notified of the correct answer. In both cases, the user can click to generate a new question.
 
