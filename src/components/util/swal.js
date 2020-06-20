@@ -8,10 +8,10 @@ export const fireOverviewSwal = () => {
   swal(
     <div>
       <h2>App overview</h2>
-      <p>I built this app to help with memorizing Korean numbers in both the Sino and Pure/Native number systems.</p>
+      <p>I built this app to help with memorizing Korean numbers in both the Sino and Pure/Native number systems. The app perpetually generates math problems for you to solve to help you memorize Korean numbers.</p>
       <p>Understanding that each system is used in different situations, the app's intention is simply to practice memorization.</p>
       <p>Good luck in your studies!</p>
-      <p>&copy; Jonathan {currentyear}</p>
+      <p>&copy; <a href="https://jonathanhoy.com" aria-label="Go to Jonathan Hoy's personal portfolio, opens in a new window" target="_blank" rel="noreferrer">Jonathan Hoy</a> {currentyear}</p>
     </div>
   )
 }

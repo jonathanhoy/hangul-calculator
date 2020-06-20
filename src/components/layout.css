@@ -612,6 +612,16 @@ section {
   text-align: left;
 }
 
+.swal-content a {
+  text-decoration: none;
+  font-weight: 700;
+  color: #5e3399;
+}
+
+.swal-content a:hover {
+  border-bottom: 1px solid #8353c6;
+}
+
 .swal-footer {
   margin-top: 0;
   padding-top: 0;
