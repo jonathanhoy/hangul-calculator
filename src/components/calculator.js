@@ -148,8 +148,8 @@ class CalculatorComponent extends React.Component {
           <Wrapper>
             <Mathfield>
               <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
-              <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
               <span className="operation">&#x2b;</span>
+              <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
             </Mathfield>
           </Wrapper>
           <form action="" onSubmit={this.validate}>
