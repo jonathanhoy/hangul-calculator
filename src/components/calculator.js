@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from "./checkbox";
-import svg from '../images/noun_Math_538141.svg';
 import { fireOverviewSwal, fireFeaturesSwal } from './util/swal';
  
 class CalculatorComponent extends React.Component {
@@ -150,7 +149,7 @@ class CalculatorComponent extends React.Component {
             <Mathfield>
               <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
               <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
-              <span className="operation"><img src={svg} alt="An addition icon"/></span>
+              <span className="operation">&#x2b;</span>
             </Mathfield>
           </Wrapper>
           <form action="" onSubmit={this.validate}>
