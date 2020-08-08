@@ -11,6 +11,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import styled from 'styled-components'
 
 import Header from "./header"
+import Nav from './nav';
 import "./layout.css"
 
 const Layout = ({ children }) => {
@@ -28,7 +29,12 @@ const Layout = ({ children }) => {
     <SiteContainer>
       <Header siteTitle={data.site.siteMetadata.title} />
       <MainContainer>
-        <main>{children}</main>
+        <main>
+          <MainGrid>
+            <Nav/>
+            {children}
+          </MainGrid>
+        </main>
       </MainContainer>
     </SiteContainer>
   )
@@ -36,6 +42,16 @@ const Layout = ({ children }) => {
 
 const SiteContainer = styled.div`
   height: 100vh;
+`;
+
+const MainGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  @media (max-width: 599px) {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 10px;
+  }
 `;
 
 export const MainContainer = styled.div`

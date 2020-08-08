@@ -135,15 +135,7 @@ class CalculatorComponent extends React.Component {
 
   render() {
     return (
-      <MainContainer>
-        <Nav>
-          <div className="nav-inner-container">
-            <button className="nav-overview" onClick={fireOverviewSwal}>
-              <p>Overview</p>
-            </button>
-            <button className="nav-features" onClick={fireFeaturesSwal}><p>Features</p></button>
-          </div>
-        </Nav>
+      <React.Fragment>
         <Calculator>
           <Wrapper>
             <Mathfield>
@@ -305,20 +297,10 @@ class CalculatorComponent extends React.Component {
             )
           }
         </Settings>
-      </MainContainer>
+      </React.Fragment>
     )
   }
 }
-
-const MainContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  @media (max-width: 599px) {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr;
-    grid-column-gap: 10px;
-  }
-`;
 
 const Nav = styled.nav`
   margin: 25px 0;
