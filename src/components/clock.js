@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from "./checkbox";
- 
-class CalculatorComponent extends React.Component {
+
+class ClockComponent extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -21,21 +21,21 @@ class CalculatorComponent extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.generateProblem();
-  }
+  // componentDidMount() {
+  //   this.generateProblem();
+  // }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.simpleNumbersToggle !== prevState.simpleNumbersToggle) {
-      this.generateProblem();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (this.state.simpleNumbersToggle !== prevState.simpleNumbersToggle) {
+  //     this.generateProblem();
+  //   }
+  // }
 
   generateProblem = () => {
     const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
     const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 99) + 1;
     const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * (100 - x)) + 1;
-    const answer = this.convertNumToWord((x+y), system);
+    const answer = this.convertNumToWord((x + y), system);
     let incorrect1;
     let incorrect2;
     let incorrect3;
@@ -70,43 +70,43 @@ class CalculatorComponent extends React.Component {
     });
   }
 
-  shuffleArray = (array) => {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
+  // shuffleArray = (array) => {
+  //   let currentIndex = array.length, temporaryValue, randomIndex;
+  //   while (0 !== currentIndex) {
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
+  //     temporaryValue = array[currentIndex];
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //   return array;
+  // }
 
-  validate = (e) => {
-    e.preventDefault();
-    if (this.state.input === this.state.answer) {
-      this.setState({
-        response: 'correct'
-      })
-    } else {
-      this.setState({
-        response: 'wrong'
-      })
-    } 
-  }
+  // validate = (e) => {
+  //   e.preventDefault();
+  //   if (this.state.input === this.state.answer) {
+  //     this.setState({
+  //       response: 'correct'
+  //     })
+  //   } else {
+  //     this.setState({
+  //       response: 'wrong'
+  //     })
+  //   }
+  // }
 
-  handleSingleInput = (e) => {
-    this.setState({
-      input: e.target.value
-    })
-  }
+  // handleSingleInput = (e) => {
+  //   this.setState({
+  //     input: e.target.value
+  //   })
+  // }
 
-  handleMultipleChoice = (e) => {
-    this.setState({
-      input: e.target.value,
-      checkedRadio: e.target.value
-    })
-  }
+  // handleMultipleChoice = (e) => {
+  //   this.setState({
+  //     input: e.target.value,
+  //     checkedRadio: e.target.value
+  //   })
+  // }
 
   handleCheckboxChange = (e) => {
     if (e.target.id === 'sinoToggle') {
@@ -126,95 +126,20 @@ class CalculatorComponent extends React.Component {
     }
   }
 
-  convertNumToWord = (num, sys) => {
-    if (numToWordsMap[num] !== undefined) {
-      return numToWordsMap[num][sys];
-    }
-  }
+  // convertNumToWord = (num, sys) => {
+  //   if (numToWordsMap[num] !== undefined) {
+  //     return numToWordsMap[num][sys];
+  //   }
+  // }
 
   render() {
     return (
       <React.Fragment>
-        <Calculator>
-          <Wrapper>
-            <Mathfield>
-              <span className="numberX">{this.convertNumToWord(this.state.x, this.state.system)}</span>
-              <span className="operation">&#x2b;</span>
-              <span className="numberY">{this.convertNumToWord(this.state.y, this.state.system)} </span>
-            </Mathfield>
-          </Wrapper>
-          <form action="" onSubmit={this.validate}>
-            {
-              this.state.multipleChoiceToggle === false &&
-              (
-                <Wrapper>
-                  <label htmlFor="input">Answer</label>
-                  <input aria-label={`Type answer here`} type="text" id="input" name="input" onChange={this.handleSingleInput} value={this.state.input} placeholder="Answer"/>
-                  {this.state.response === '' && <p>&nbsp;</p>}
-                  {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p> }
-                  {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
-                  <StyledButton type="submit" theme="purple">Check</StyledButton>
-                </Wrapper>
-              )
-            }
-            {
-              this.state.multipleChoiceToggle === true &&
-              <MultipleChoice>
-                <div className="container">
-                  {
-                    this.state.multipleChoiceArr.map((item) => {
-                      return (
-                        <>
-                          <input aria-label={`Input for ${item}`} key={item} type="radio" name="multipleChoice" id={item} onClick={this.handleMultipleChoice} value={item} checked={this.state.checkedRadio === item} />
-                          <label htmlFor={item}>
-                            {item}
-                          </label>
-                        </>
-                      )
-                    })
-                  }
-                </div>
-                <Wrapper margin="auto">
-                  {this.state.response === '' && <p>&nbsp;</p>}
-                  {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
-                  {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
-                  <StyledButton type="submit" theme="purple">Check</StyledButton>
-                </Wrapper>
-              </MultipleChoice>
-            }
-          </form>
-          <Wrapper>
-            <StyledButton onClick={this.generateProblem}>Next</StyledButton>
-          </Wrapper>
-        </Calculator>
+        <h2>I AM THE CLOCK</h2>
         <Settings
-          simpleNumbersToggle={this.state.simpleNumbersToggle}
-          multipleChoiceToggle={this.state.multipleChoiceToggle}
           sinoToggle={this.state.sinoToggle}
           pureToggle={this.state.pureToggle}
         >
-          <div className="options-container">
-            <div className="toggle">
-              <label htmlFor="simpleNumbersToggle">
-                <p className="simpleNumbers">Simple numbers</p>
-                <Checkbox
-                  id="simpleNumbersToggle"
-                  checked={this.state.simpleNumbersToggle}
-                  onChange={this.handleCheckboxChange}
-                />
-              </label>
-            </div>
-            <div className="toggle">
-              <label htmlFor="multipleChoiceToggle">
-                <p className="multipleChoice">Multiple choice</p>
-                <Checkbox
-                  id="multipleChoiceToggle"
-                  checked={this.state.multipleChoiceToggle}
-                  onChange={this.handleCheckboxChange}
-                />
-              </label>
-            </div>
-          </div>
           <div className="reference-container">
             <div className="toggle">
               <label htmlFor="sinoToggle">
@@ -300,6 +225,51 @@ class CalculatorComponent extends React.Component {
     )
   }
 }
+
+const Nav = styled.nav`
+  margin: 25px 0;
+  .nav-inner-container {
+    background: Gainsboro;
+    padding: 25px;
+    border-radius: 25px;
+    display: inline-block;
+  }
+  .nav-overview, .nav-features {
+    margin: 5px 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+    padding: 0;
+    p {
+      margin: 0;
+      text-align: left;
+      color: rgba(0,0,0,0.8);
+      transition: all 0.2s;
+    }
+    p:hover {
+      color: #5e3399;
+    }
+  }
+  @media (max-width: 599px) {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    margin-bottom: 0;
+    margin-top: 10px;
+    .nav-overview, .nav-features {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+    .nav-inner-container {
+      background: Gainsboro;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 5px;
+    }
+  }
+`;
 
 const Calculator = styled.section`
   display: flex;
@@ -537,4 +507,4 @@ export const Wrapper = styled.div`
   margin: ${props => (props.margin === 'auto' ? '0 auto' : '0')}
 `;
 
-export default CalculatorComponent;
+export default ClockComponent;
