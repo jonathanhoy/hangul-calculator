@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import CalculatorComponent from "../components/calculator"
 import ClockComponent from "../components/clock"
-import { fireOverviewSwal, fireFeaturesSwal } from '../components/util/swal';
+import { fireOverviewSwal } from '../components/util/swal';
 
 
 class IndexPage extends React.Component {
@@ -44,11 +44,6 @@ class IndexPage extends React.Component {
                 </button>
               </li>
               <li>
-                <button className="nav-features" onClick={fireFeaturesSwal}>
-                  <p>Features</p>
-                </button>
-              </li>
-              <li>
                 <button className="nav-features" onClick={this.viewCalculator}>
                   <p>Calculator</p>
                 </button>
@@ -83,11 +78,6 @@ const StyledNav = styled.nav`
   ul {
     list-style: none;
     padding: 0;
-    li:nth-child(2) {
-      border-bottom: 2px solid black;
-      padding-bottom: 8px;
-      margin-bottom: 8px;
-    }
   }
   .nav-new-feature {
     text-transform: uppercase;

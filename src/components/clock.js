@@ -15,6 +15,7 @@ class ClockComponent extends React.Component {
       hangulMinute: '',
       sinoToggle: false,
       pureToggle: false,
+      response: '',
     }
   }
 
@@ -24,14 +25,17 @@ class ClockComponent extends React.Component {
 
   generateProblem = () => {
     const hour = (Math.floor(Math.random() * 12) + 1).toString();
-    const minute = this.convertMinuteToStr(Math.floor(Math.random() * 59));
-    const hangulHour = this.convertNumToHangul(hour);
-    const hangulMinute = this.convertNumToHangul(minute);
+    const minute = this.convertMinuteToStr(Math.floor(Math.random() * 59 ));
+    const hangulHour = this.convertNumToHangul(hour, "hour");
+    const hangulMinute = this.convertNumToHangul(minute, "minute");
     this.setState({
       hour,
       hangulHour,
       minute,
       hangulMinute,
+      response: '',
+      ansHour: '',
+      ansMinute: '',
     });
   }
 
@@ -43,18 +47,18 @@ class ClockComponent extends React.Component {
     }
   }
 
-  // validate = (e) => {
-  //   e.preventDefault();
-  //   if (this.state.input === this.state.answer) {
-  //     this.setState({
-  //       response: 'correct'
-  //     })
-  //   } else {
-  //     this.setState({
-  //       response: 'wrong'
-  //     })
-  //   }
-  // }
+  validate = (e) => {
+    e.preventDefault();
+    if (this.state.ansHour === this.state.hangulHour && this.state.ansMinute === this.state.hangulMinute) {
+      this.setState({
+        response: 'correct'
+      })
+    } else {
+      this.setState({
+        response: 'wrong'
+      })
+    }
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -80,10 +84,10 @@ class ClockComponent extends React.Component {
     }
   }
 
-  convertNumToHangul = (num) => {
-    if (hourToHangulMap[num] !== undefined) {
+  convertNumToHangul = (num, time) => {
+    if (hourToHangulMap[num] !== undefined && time === "hour") {
       return hourToHangulMap[num];
-    } else if (minuteToHangulMap[num] !== undefined) {
+    } else if (minuteToHangulMap[num] !== undefined && time === "minute") {
       return minuteToHangulMap[num];
     }
   }
@@ -94,7 +98,7 @@ class ClockComponent extends React.Component {
         <Clock>
           <Wrapper>
             <ClockField>
-              <p><span>{this.state.hour}</span>:<span>{this.state.minute}</span></p>
+              <p><span>{this.state.hour}</span><span>:</span><span>{this.state.minute}</span></p>
             </ClockField>
             <form action="" onSubmit={this.validate}>
               <div className="inputGroup">
@@ -102,12 +106,14 @@ class ClockComponent extends React.Component {
                 <label htmlFor="ansHour">시</label>
               </div>
               <div className="inputGroup">
-                <input aria-label={`Type minute here`} className="minute" type="text" id="ansMinute" name="ansMinute" onChange={this.handleChange} value={this.state.ansMinute} placeholder="" />
-                <label htmlFor="ansMinute">분</label>
+                <input disabled={this.state.minute === "00" ? true : false} aria-label={`Type minute here`} className={this.state.minute === "00" ? "minute disabled" : "minute"} type="text" id="ansMinute" name="ansMinute" onChange={this.handleChange} value={this.state.ansMinute} placeholder="" />
+                <label htmlFor="ansMinute" class={this.state.minute === "00" ? "minute disabled" : "minute"}>분</label>
               </div>
-              {this.state.response === '' && <p>&nbsp;</p>}
-              {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
-              {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
+              <div className="responseContainer">
+                {this.state.response === '' && <p>&nbsp;</p>}
+                {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
+                {this.state.response === 'wrong' && <p class="wrong"><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.hangulHour} 시 {this.state.hangulMinute} {this.state.hangulMinute !== "" && "분"}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
+              </div>
               <div className="submitContainer">
                 <StyledButton type="submit" theme="purple">Check</StyledButton>
               </div>
@@ -156,18 +162,7 @@ class ClockComponent extends React.Component {
                   <li><span>7</span><span>칠</span></li>
                   <li><span>8</span><span>팔</span></li>
                   <li><span>9</span><span>구</span></li>
-                </List>
-                <List>
                   <li><span>10</span><span>십</span></li>
-                  <li><span>20</span><span>이십</span></li>
-                  <li><span>30</span><span>삼십</span></li>
-                  <li><span>40</span><span>사십</span></li>
-                  <li><span>50</span><span>오십</span></li>
-                  <li><span>60</span><span>육십</span></li>
-                  <li><span>70</span><span>칠십</span></li>
-                  <li><span>80</span><span>팔십</span></li>
-                  <li><span>90</span><span>구십</span></li>
-                  <li><span>100</span><span>백</span></li>
                 </List>
               </ListContainer>
             )
@@ -176,27 +171,16 @@ class ClockComponent extends React.Component {
             this.state.pureToggle === true && (
               <ListContainer>
                 <List digits="single">
-                  <li><span>1</span><span>하나</span></li>
-                  <li><span>2</span><span>둘</span></li>
-                  <li><span>3</span><span>셋</span></li>
-                  <li><span>4</span><span>넷</span></li>
+                  <li><span>1</span><span>하나 / 힌</span></li>
+                  <li><span>2</span><span>둘 / 두</span></li>
+                  <li><span>3</span><span>셋 / 세</span></li>
+                  <li><span>4</span><span>넷 / 네</span></li>
                   <li><span>5</span><span>다섯</span></li>
                   <li><span>6</span><span>여섯</span></li>
                   <li><span>7</span><span>일곱</span></li>
                   <li><span>8</span><span>여덟</span></li>
                   <li><span>9</span><span>아홉</span></li>
-                </List>
-                <List>
                   <li><span>10</span><span>열</span></li>
-                  <li><span>20</span><span>스물</span></li>
-                  <li><span>30</span><span>서른</span></li>
-                  <li><span>40</span><span>마흔</span></li>
-                  <li><span>50</span><span>쉰</span></li>
-                  <li><span>60</span><span>예순</span></li>
-                  <li><span>70</span><span>일흔</span></li>
-                  <li><span>80</span><span>여든</span></li>
-                  <li><span>90</span><span>아흔</span></li>
-                  <li><span>100</span><span>백</span></li>
                 </List>
               </ListContainer>
             )
@@ -212,7 +196,7 @@ const Clock = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
   form {
     display: flex;
     flex-wrap: wrap;
@@ -239,6 +223,12 @@ const Clock = styled.section`
         width: 74px;
         margin-left: 8px;
       }
+      input.disabled {
+        border: 3px solid lightgrey;
+      }
+      label.disabled {
+        color: lightgrey;
+      }
     }
     p {
       text-align: center;
@@ -247,6 +237,13 @@ const Clock = styled.section`
     }
     .submitContainer {
       width: 100%;
+    }
+    .responseContainer {
+      text-align: center;
+      width: 100%;
+      .wrong {
+        font-size: 22px;
+      }
     }
   }
   label[for="input"] { 
@@ -262,7 +259,7 @@ const Clock = styled.section`
   @media (max-width: 599px) {
     grid-column: 2 / 3;
     grid-row: 1 / 3;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 0;
     align-items: flex-end;
   }
@@ -273,13 +270,20 @@ const ClockField = styled.div`
   border-radius: 5px;
   p {
     margin: 0;
-    text-align: right;
+    text-align: center;
     font-size: 48px;
     padding: 16px;
     padding-right: 18px;
     letter-spacing: 2px;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold; 
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    span:nth-child(1) {
+      text-align: right;
+    }
+    span:nth-child(3) {
+      text-align: left;
+    }
   }
 `;
 
@@ -347,14 +351,14 @@ const Settings = styled.section`
 
 const ListContainer = styled.div`
   position: absolute;
-  top: 175px;
+  top: 95px;
   right: 0;
   display: flex;
   span {
     font-weight: 600;
   }
   @media (max-width: 599px) {
-    top: 155px;
+    top: 60px;
     left: 0;
     width: 100%;
     justify-content: space-between;
@@ -366,12 +370,16 @@ const List = styled.ul`
   flex-direction: column;
   padding-left: 0;
   list-style: none;
-  width: ${props => (props.digits === 'single' ? '55px' : '75px')};
-  margin-right: ${props => (props.digits === 'single' ? '45px' : '0')};
   li {
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
+    span:nth-child(1) {
+      padding-right: 5px;
+    }
+    span:nth-child(2) {
+      padding-left: 5px;
+    }
   }
 `;
 
