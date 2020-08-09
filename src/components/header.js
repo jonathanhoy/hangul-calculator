@@ -28,7 +28,7 @@ const Header = ({ siteTitle }) => (
   <StyledHeader>
     <div>
       <h1>
-        <span className="mobileBlock">한글 계산기</span> <span className="mobileHide">-</span> <span className="mobileBlock">Hangul Calculator</span>
+        <span className="mobileBlock">한글 계산기</span> <span className="mobileHide">-</span> <span className="mobileBlock">Hangul Calculator test</span>
       </h1>
     </div>
   </StyledHeader>
