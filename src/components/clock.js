@@ -258,8 +258,8 @@ const Clock = styled.section`
   }
   @media (max-width: 599px) {
     grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    margin-top: 10px;
+    grid-row: 2 / 4;
+    margin-top: 5px;
     margin-bottom: 0;
     align-items: flex-end;
   }

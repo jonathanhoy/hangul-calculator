@@ -339,8 +339,8 @@ const Calculator = styled.section`
   }
   @media (max-width: 599px) {
     grid-column: 2 / 3;
-    grid-row: 1 / 3;
-    margin-top: 30px;
+    grid-row: 2 / 4;
+    margin-top: 20px;
     margin-bottom: 0;
     align-items: flex-end;
   }
