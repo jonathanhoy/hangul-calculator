@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { hourToStrMap, minuteToStrMap } from './util/timeMapping';
+import { minuteToStrMap, hourToHangulMap, minuteToHangulMap } from './util/timeMapping';
 import Checkbox from "./checkbox";
 
 class ClockComponent extends React.Component {
@@ -9,15 +9,12 @@ class ClockComponent extends React.Component {
     this.state = {
       hour: 0,
       minute: 0,
-      answer: 0,
-      input: '',
-      system: '',
-      simpleNumbersToggle: true,
-      multipleChoiceToggle: false,
+      ansHour: '',
+      ansMinute: '',
+      hangulHour: '',
+      hangulMinute: '',
       sinoToggle: false,
       pureToggle: false,
-      multipleChoiceArr: [],
-      checkedRadio: null
     }
   }
 
@@ -25,27 +22,16 @@ class ClockComponent extends React.Component {
     this.generateProblem();
   }
 
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   if (this.state.simpleNumbersToggle !== prevState.simpleNumbersToggle) {
-  //     this.generateProblem();
-  //   }
-  // }
-
   generateProblem = () => {
-    // const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
     const hour = (Math.floor(Math.random() * 12) + 1).toString();
     const minute = this.convertMinuteToStr(Math.floor(Math.random() * 59));
-    console.log(hour, ":", minute, (typeof hour), (typeof minute));
-
+    const hangulHour = this.convertNumToHangul(hour);
+    const hangulMinute = this.convertNumToHangul(minute);
     this.setState({
       hour,
+      hangulHour,
       minute,
-      // answer,
-      // system,
-      // input: '',
-      // response: '',
-      // multipleChoiceArr: tempArr,
-      // checkedRadio: null,
+      hangulMinute,
     });
   }
 
@@ -56,18 +42,6 @@ class ClockComponent extends React.Component {
       return min.toString();
     }
   }
-
-  // shuffleArray = (array) => {
-  //   let currentIndex = array.length, temporaryValue, randomIndex;
-  //   while (0 !== currentIndex) {
-  //     randomIndex = Math.floor(Math.random() * currentIndex);
-  //     currentIndex -= 1;
-  //     temporaryValue = array[currentIndex];
-  //     array[currentIndex] = array[randomIndex];
-  //     array[randomIndex] = temporaryValue;
-  //   }
-  //   return array;
-  // }
 
   // validate = (e) => {
   //   e.preventDefault();
@@ -84,16 +58,9 @@ class ClockComponent extends React.Component {
 
   handleChange = (e) => {
     this.setState({
-      input: e.target.value
+      [e.target.id]: e.target.value
     })
   }
-
-  // handleMultipleChoice = (e) => {
-  //   this.setState({
-  //     input: e.target.value,
-  //     checkedRadio: e.target.value
-  //   })
-  // }
 
   handleCheckboxChange = (e) => {
     if (e.target.id === 'sinoToggle') {
@@ -113,11 +80,13 @@ class ClockComponent extends React.Component {
     }
   }
 
-  // convertNumToWord = (num, sys) => {
-  //   if (numToWordsMap[num] !== undefined) {
-  //     return numToWordsMap[num][sys];
-  //   }
-  // }
+  convertNumToHangul = (num) => {
+    if (hourToHangulMap[num] !== undefined) {
+      return hourToHangulMap[num];
+    } else if (minuteToHangulMap[num] !== undefined) {
+      return minuteToHangulMap[num];
+    }
+  }
 
   render() {
     return (
@@ -127,19 +96,23 @@ class ClockComponent extends React.Component {
             <ClockField>
               <p><span>{this.state.hour}</span>:<span>{this.state.minute}</span></p>
             </ClockField>
-          </Wrapper>
-          <form action="" onSubmit={this.validate}>
-            <Wrapper>
-              <div>
-                <input aria-label={`Type hour here`} type="text" id="ansHour" name="ansHour" onChange={this.handleChange} value={this.state.input} placeholder="" />
+            <form action="" onSubmit={this.validate}>
+              <div className="inputGroup">
+                <input aria-label={`Type hour here`} className="hour" type="text" id="ansHour" name="ansHour" onChange={this.handleChange} value={this.state.ansHour} placeholder="" />
                 <label htmlFor="ansHour">시</label>
+              </div>
+              <div className="inputGroup">
+                <input aria-label={`Type minute here`} className="minute" type="text" id="ansMinute" name="ansMinute" onChange={this.handleChange} value={this.state.ansMinute} placeholder="" />
+                <label htmlFor="ansMinute">분</label>
               </div>
               {this.state.response === '' && <p>&nbsp;</p>}
               {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
               {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
-              <StyledButton type="submit" theme="purple">Check</StyledButton>
-            </Wrapper>
-          </form>
+              <div className="submitContainer">
+                <StyledButton type="submit" theme="purple">Check</StyledButton>
+              </div>
+            </form>
+          </Wrapper>
           <Wrapper>
             <StyledButton onClick={this.generateProblem}>Next</StyledButton>
           </Wrapper>
@@ -240,25 +213,41 @@ const Clock = styled.section`
   justify-content: center;
   align-items: center;
   margin-top: 40px;
-  label {
-    margin-top: 25px;
-    display: block;
-    text-align: center;
-    font-weight: 600;
-  }
-  input[type="text"] {
-    width: 100%;
-    border: 3px solid black;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 10px 0;
-    text-align: center;
-    font-size: 32px;
-  }
-  form p {
-    text-align: center;
-    font-size: 32px;
-    margin: 16px 0;
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    .inputGroup {
+      display: flex;
+      align-items: center;
+      label {
+        font-weight: 600;
+        margin-left: 8px;
+        font-size: 24px;
+      }
+      input {
+        border: 3px solid black;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 10px 0;
+        text-align: center;
+        font-size: 18px;
+      }
+      input.hour {
+        width: 60px;
+      }
+      input.minute {
+        width: 74px;
+        margin-left: 8px;
+      }
+    }
+    p {
+      text-align: center;
+      font-size: 32px;
+      margin: 16px 0;
+    }
+    .submitContainer {
+      width: 100%;
+    }
   }
   label[for="input"] { 
     border: 0;
