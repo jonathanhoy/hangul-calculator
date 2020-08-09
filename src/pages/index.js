@@ -36,33 +36,30 @@ class IndexPage extends React.Component {
     return (
       <>
         <Layout viewCalculator={this.state.viewCalculator} viewClock={this.state.viewClock}>
-          <Header viewCalculator={this.state.viewCalculator} viewClock={this.state.viewClock} />
-          <MainContainer>
-            <MainGrid>
-              <SEO title={this.state.viewCalculator && "한글 Calculator" || this.state.viewClock && "한글 Clock"} />
-              <StyledNav>
-                <ul className="nav-inner-container">
-                  <li>
-                    <button className="nav-overview" onClick={fireOverviewSwal}>
-                      <p>Overview</p>
-                    </button>
-                  </li>
-                  <li>
-                    <button className="nav-features" onClick={this.viewCalculator}>
-                      <p>Calculator</p>
-                    </button>
-                  </li>
-                  <li>
-                    <button className="nav-features" onClick={this.viewClock}>
-                      <p>Clock <span className="nav-new-feature">new</span></p>
-                    </button>
-                  </li>
-                </ul>
-              </StyledNav>
-              {this.state.viewCalculator && <CalculatorComponent />}
-              {this.state.viewClock && <ClockComponent />}
-            </MainGrid>
-          </MainContainer>
+          <MainGrid>
+            <SEO title={this.state.viewCalculator && "한글 Calculator" || this.state.viewClock && "한글 Clock"} />
+            <StyledNav>
+              <ul className="nav-inner-container">
+                <li>
+                  <button className="nav-overview" onClick={fireOverviewSwal}>
+                    <p>Overview</p>
+                  </button>
+                </li>
+                <li>
+                  <button className="nav-features" onClick={this.viewCalculator}>
+                    <p>Calculator</p>
+                  </button>
+                </li>
+                <li>
+                  <button className="nav-features" onClick={this.viewClock}>
+                    <p>Clock <span className="nav-new-feature">new</span></p>
+                  </button>
+                </li>
+              </ul>
+            </StyledNav>
+            {this.state.viewCalculator && <CalculatorComponent />}
+            {this.state.viewClock && <ClockComponent />}
+          </MainGrid>
         </Layout>
       </>
     )

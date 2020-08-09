@@ -8,31 +8,60 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import styled from 'styled-components'
+import styled from "styled-components"
+import Header from "./header"
 import "./layout.css"
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+// const Layout = ({ children }) => {
+//   const data = useStaticQuery(graphql`
+//     query SiteTitleQuery {
+//       site {
+//         siteMetadata {
+//           title
+//         }
+//       }
+//     }
+//   `)
 
-  return (
-    <SiteContainer>
-      <main>
-        {children}
-      </main>
-    </SiteContainer>
-  )
+//   return (
+//     <SiteContainer>
+//       <Header viewCalculator={this.props.viewCalculator} viewClock={this.props.viewClock} />
+//       <MainContainer>
+//         <main>
+//           {children}
+//         </main>
+//       </MainContainer>
+//     </SiteContainer>
+//   )
+// }
+
+class Layout extends React.Component {
+  render() {
+    return (
+      <SiteContainer>
+        <Header viewCalculator={this.props.viewCalculator} viewClock={this.props.viewClock} />
+        <MainContainer>
+          <main>
+            {this.props.children}
+          </main>
+        </MainContainer>
+      </SiteContainer>
+    )
+  }
+
 }
 
 const SiteContainer = styled.div`
   height: 100vh;
+`;
+
+export const MainContainer = styled.div`
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0 1.0875rem 1.45rem;
+  @media (max-width: 599px) {
+    padding: 0 .5rem 1.45rem;
+  }
 `;
 
 Layout.propTypes = {
