@@ -102,8 +102,7 @@ const StyledNav = styled.nav`
     background: Gainsboro;
     padding: 25px;
     border-radius: 25px;
-    display: flex;
-    justify-content: space-between;
+    display: inline-block;
   }
   .nav-overview, .nav-features {
     margin: 5px 0;
@@ -133,6 +132,9 @@ const StyledNav = styled.nav`
       margin: 0;
     }
     .nav-inner-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
       background: Gainsboro;
       padding: 10px 15px;
       border-radius: 15px;
