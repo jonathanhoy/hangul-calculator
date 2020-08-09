@@ -24,15 +24,19 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header = ({ siteTitle }) => (
-  <StyledHeader>
-    <div>
-      <h1>
-        <span className="mobileBlock">한글 계산기</span> <span className="mobileHide">-</span> <span className="mobileBlock">Hangul Calculator</span>
-      </h1>
-    </div>
-  </StyledHeader>
-)
+class Header extends React.Component {
+  render() {
+    return (
+      <StyledHeader>
+      <div>
+        <h1>
+    <span className="mobileBlock">{this.props.viewCalculator && '한글 계산기'}{this.props.viewClock && '한글 시계'}</span> <span className="mobileHide">-</span> <span className="mobileBlock">{this.props.viewCalculator && 'Hangul Calculator'}{this.props.viewClock && 'Hangul Clock'}</span>
+        </h1>
+      </div>
+    </StyledHeader>
+    )
+  }
+}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
