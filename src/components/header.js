@@ -16,7 +16,7 @@ const StyledHeader = styled.header`
   }
   @media (max-width: 599px) {
     .mobileBlock {
-      display: inline-block;
+      display: block;
     }
     .mobileHide {
       display: none;
