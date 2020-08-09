@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from "./checkbox";
-import { fireOverviewSwal, fireFeaturesSwal } from './util/swal';
  
 class CalculatorComponent extends React.Component {
   constructor() {
@@ -135,15 +134,7 @@ class CalculatorComponent extends React.Component {
 
   render() {
     return (
-      <MainContainer>
-        <Nav>
-          <div className="nav-inner-container">
-            <button className="nav-overview" onClick={fireOverviewSwal}>
-              <p>Overview</p>
-            </button>
-            <button className="nav-features" onClick={fireFeaturesSwal}><p>Features</p></button>
-          </div>
-        </Nav>
+      <React.Fragment>
         <Calculator>
           <Wrapper>
             <Mathfield>
@@ -305,65 +296,10 @@ class CalculatorComponent extends React.Component {
             )
           }
         </Settings>
-      </MainContainer>
+      </React.Fragment>
     )
   }
 }
-
-const MainContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  @media (max-width: 599px) {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr;
-    grid-column-gap: 10px;
-  }
-`;
-
-const Nav = styled.nav`
-  margin: 25px 0;
-  .nav-inner-container {
-    background: Gainsboro;
-    padding: 25px;
-    border-radius: 25px;
-    display: inline-block;
-  }
-  .nav-overview, .nav-features {
-    margin: 5px 0;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-weight: 600;
-    font-size: 18px;
-    display: block;
-    padding: 0;
-    p {
-      margin: 0;
-      text-align: left;
-      color: rgba(0,0,0,0.8);
-      transition: all 0.2s;
-    }
-    p:hover {
-      color: #5e3399;
-    }
-  }
-  @media (max-width: 599px) {
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-    margin-bottom: 0;
-    margin-top: 10px;
-    .nav-overview, .nav-features {
-      margin: 0;
-      margin-bottom: 5px;
-    }
-    .nav-inner-container {
-      background: Gainsboro;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 5px;
-    }
-  }
-`;
 
 const Calculator = styled.section`
   display: flex;

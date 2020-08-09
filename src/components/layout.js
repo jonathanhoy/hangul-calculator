@@ -8,30 +8,47 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import styled from 'styled-components'
-
+import styled from "styled-components"
 import Header from "./header"
 import "./layout.css"
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+// const Layout = ({ children }) => {
+//   const data = useStaticQuery(graphql`
+//     query SiteTitleQuery {
+//       site {
+//         siteMetadata {
+//           title
+//         }
+//       }
+//     }
+//   `)
 
-  return (
-    <SiteContainer>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <MainContainer>
-        <main>{children}</main>
-      </MainContainer>
-    </SiteContainer>
-  )
+//   return (
+//     <SiteContainer>
+//       <Header viewCalculator={this.props.viewCalculator} viewClock={this.props.viewClock} />
+//       <MainContainer>
+//         <main>
+//           {children}
+//         </main>
+//       </MainContainer>
+//     </SiteContainer>
+//   )
+// }
+
+class Layout extends React.Component {
+  render() {
+    return (
+      <SiteContainer>
+        <Header viewCalculator={this.props.viewCalculator} viewClock={this.props.viewClock} />
+        <MainContainer>
+          <main>
+            {this.props.children}
+          </main>
+        </MainContainer>
+      </SiteContainer>
+    )
+  }
+
 }
 
 const SiteContainer = styled.div`
