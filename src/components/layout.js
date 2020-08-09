@@ -24,26 +24,15 @@ const Layout = ({ children }) => {
 
   return (
     <SiteContainer>
-      <MainContainer>
-        <main>
-          {children}
-        </main>
-      </MainContainer>
+      <main>
+        {children}
+      </main>
     </SiteContainer>
   )
 }
 
 const SiteContainer = styled.div`
   height: 100vh;
-`;
-
-export const MainContainer = styled.div`
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 0 1.0875rem 1.45rem;
-  @media (max-width: 599px) {
-    padding: 0 .5rem 1.45rem;
-  }
 `;
 
 Layout.propTypes = {
