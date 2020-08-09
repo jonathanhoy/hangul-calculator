@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import numToWordsMap from './util/mapping';
+import { hourToStrMap, minuteToStrMap } from './util/timeMapping';
 import Checkbox from "./checkbox";
 
 class ClockComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      x: 0,
-      y: 0,
+      hour: 0,
+      minute: 0,
       answer: 0,
       input: '',
       system: '',
@@ -21,9 +21,9 @@ class ClockComponent extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.generateProblem();
-  // }
+  componentDidMount() {
+    this.generateProblem();
+  }
 
   // componentDidUpdate(prevProps, prevState, snapshot) {
   //   if (this.state.simpleNumbersToggle !== prevState.simpleNumbersToggle) {
@@ -32,42 +32,29 @@ class ClockComponent extends React.Component {
   // }
 
   generateProblem = () => {
-    const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
-    const x = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * 9) + 1 : Math.floor(Math.random() * 99) + 1;
-    const y = this.state.simpleNumbersToggle === true ? Math.floor(Math.random() * (10 - x)) + 1 : Math.floor(Math.random() * (100 - x)) + 1;
-    const answer = this.convertNumToWord((x + y), system);
-    let incorrect1;
-    let incorrect2;
-    let incorrect3;
-    let tempArr;
-
-    if (this.state.simpleNumbersToggle === false) {
-      const shuffledArr = this.shuffleArray(Object.entries(numToWordsMap).filter(num => this.convertNumToWord(parseInt(num[0]), system) !== answer));
-      [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
-      incorrect1 = incorrect1[1][system];
-      incorrect2 = incorrect2[1][system];
-      incorrect3 = incorrect3[1][system];
-      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3]);
-    } else if (this.state.simpleNumbersToggle === true) {
-      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-      const shuffledArr = this.shuffleArray((arr.filter(num => this.convertNumToWord(num, system) !== answer)));
-      [incorrect1, incorrect2, incorrect3] = [...shuffledArr];
-      incorrect1 = this.convertNumToWord(incorrect1, system);
-      incorrect2 = this.convertNumToWord(incorrect2, system);
-      incorrect3 = this.convertNumToWord(incorrect3, system);
-      tempArr = this.shuffleArray([answer, incorrect1, incorrect2, incorrect3]);
-    };
+    // const system = (Math.floor(Math.random() * 2) + 1) === 1 ? 'sino' : 'pure';
+    const hour = (Math.floor(Math.random() * 12) + 1).toString();
+    const minute = this.convertMinuteToStr(Math.floor(Math.random() * 59));
+    console.log(hour, ":", minute, (typeof hour), (typeof minute));
 
     this.setState({
-      x,
-      y,
-      answer,
-      system,
-      input: '',
-      response: '',
-      multipleChoiceArr: tempArr,
-      checkedRadio: null,
+      hour,
+      minute,
+      // answer,
+      // system,
+      // input: '',
+      // response: '',
+      // multipleChoiceArr: tempArr,
+      // checkedRadio: null,
     });
+  }
+
+  convertMinuteToStr = (min) => {
+    if (minuteToStrMap[min] !== undefined) {
+      return minuteToStrMap[min].output;
+    } else {
+      return min.toString();
+    }
   }
 
   // shuffleArray = (array) => {
@@ -95,11 +82,11 @@ class ClockComponent extends React.Component {
   //   }
   // }
 
-  // handleSingleInput = (e) => {
-  //   this.setState({
-  //     input: e.target.value
-  //   })
-  // }
+  handleChange = (e) => {
+    this.setState({
+      input: e.target.value
+    })
+  }
 
   // handleMultipleChoice = (e) => {
   //   this.setState({
@@ -135,7 +122,28 @@ class ClockComponent extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h2>I AM THE CLOCK</h2>
+        <Clock>
+          <Wrapper>
+            <ClockField>
+              <p><span>{this.state.hour}</span>:<span>{this.state.minute}</span></p>
+            </ClockField>
+          </Wrapper>
+          <form action="" onSubmit={this.validate}>
+            <Wrapper>
+              <div>
+                <input aria-label={`Type hour here`} type="text" id="ansHour" name="ansHour" onChange={this.handleChange} value={this.state.input} placeholder="" />
+                <label htmlFor="ansHour">시</label>
+              </div>
+              {this.state.response === '' && <p>&nbsp;</p>}
+              {this.state.response === 'correct' && <p>맞아요! <span role="img" aria-label="A celebration emoji">🎉</span></p>}
+              {this.state.response === 'wrong' && <p><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.answer}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
+              <StyledButton type="submit" theme="purple">Check</StyledButton>
+            </Wrapper>
+          </form>
+          <Wrapper>
+            <StyledButton onClick={this.generateProblem}>Next</StyledButton>
+          </Wrapper>
+        </Clock>
         <Settings
           sinoToggle={this.state.sinoToggle}
           pureToggle={this.state.pureToggle}
@@ -226,52 +234,7 @@ class ClockComponent extends React.Component {
   }
 }
 
-const Nav = styled.nav`
-  margin: 25px 0;
-  .nav-inner-container {
-    background: Gainsboro;
-    padding: 25px;
-    border-radius: 25px;
-    display: inline-block;
-  }
-  .nav-overview, .nav-features {
-    margin: 5px 0;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-weight: 600;
-    font-size: 18px;
-    display: block;
-    padding: 0;
-    p {
-      margin: 0;
-      text-align: left;
-      color: rgba(0,0,0,0.8);
-      transition: all 0.2s;
-    }
-    p:hover {
-      color: #5e3399;
-    }
-  }
-  @media (max-width: 599px) {
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-    margin-bottom: 0;
-    margin-top: 10px;
-    .nav-overview, .nav-features {
-      margin: 0;
-      margin-bottom: 5px;
-    }
-    .nav-inner-container {
-      background: Gainsboro;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 5px;
-    }
-  }
-`;
-
-const Calculator = styled.section`
+const Clock = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -316,77 +279,18 @@ const Calculator = styled.section`
   }
 `;
 
-const Mathfield = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 60px 60px;
-  border-bottom: 3px solid black;
-  span {
+const ClockField = styled.div`
+  border: 3px solid black;
+  border-radius: 5px;
+  p {
+    margin: 0;
+    text-align: right;
     font-size: 48px;
-  }
-  .numberX {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    justify-self: end;
-  }
-  .numberY {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    justify-self: end;
-  }
-  .operation {
-    width: 25px;
-    height: 25px;
-    grid-row: 2 / 3;
-  }
-`;
-
-const MultipleChoice = styled.div`
-  .container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 10px;
-    margin-top: 10px;
-    margin-bottom: 26px;
-  }
-  input[type="radio"] {
-    opacity: 0;
-    position: fixed;
-    width: 0;
-  }
-  label {
-    display: inline-block;
-    padding: 5px;
-    border: 3px solid #000;
-    border-radius: 5px;
-    margin-top: 0;
-    font-size: 24px;
-    transition: all 0.2s;
-  }
-  input[type="radio"]:checked+label {
-    background-color: #5E3399;
-    border-color: #5E3399;
-    color: white;
-  }
-  label:hover {
-    background-color: #8353c6;
-    border-color: #8353c6;
-    color: white;
-  }
-  input[type="submit"] {
-    grid-column: 0 / 4;
-  }
-  @media (max-width: 599px) {
-    width: auto;
-    .container {
-      grid-gap: 5px;
-      grid-template-columns: 1fr 1fr;
-    }
-    label {
-      font-size: 18px;
-      padding: 15px 10px;
-    }
+    padding: 16px;
+    padding-right: 18px;
+    letter-spacing: 2px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold; 
   }
 `;
 
