@@ -102,7 +102,8 @@ const StyledNav = styled.nav`
     background: Gainsboro;
     padding: 25px;
     border-radius: 25px;
-    display: inline-block;
+    display: flex;
+    justify-content: space-between;
   }
   .nav-overview, .nav-features {
     margin: 5px 0;
@@ -125,16 +126,15 @@ const StyledNav = styled.nav`
   }
   @media (max-width: 599px) {
     grid-row: 1 / 2;
-    grid-column: 1 / 2;
+    grid-column: 1 / 3;
     margin-bottom: 0;
     margin-top: 10px;
     .nav-overview, .nav-features {
       margin: 0;
-      margin-bottom: 5px;
     }
     .nav-inner-container {
       background: Gainsboro;
-      padding: 15px;
+      padding: 10px 15px;
       border-radius: 15px;
       margin-bottom: 5px;
     }
