@@ -171,7 +171,7 @@ class ClockComponent extends React.Component {
             this.state.pureToggle === true && (
               <ListContainer>
                 <List digits="single">
-                  <li><span>1</span><span>하나 / 힌</span></li>
+                  <li><span>1</span><span>하나 / 한</span></li>
                   <li><span>2</span><span>둘 / 두</span></li>
                   <li><span>3</span><span>셋 / 세</span></li>
                   <li><span>4</span><span>넷 / 네</span></li>
@@ -352,14 +352,14 @@ const Settings = styled.section`
 const ListContainer = styled.div`
   position: absolute;
   top: 95px;
-  right: 0;
+  right: 10px;
   display: flex;
   span {
     font-weight: 600;
   }
   @media (max-width: 599px) {
     top: 60px;
-    left: 0;
+    left: 10px;
     width: 100%;
     justify-content: space-between;
   }
