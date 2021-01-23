@@ -26,4 +26,33 @@ const ListContainer = styled.div`
   }
 `;
 
-export default ListContainer;
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  list-style: none;
+  li {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+	li:last-child {
+		margin-bottom: 0;
+	}
+`;
+
+const CalculatorList = styled(List)`
+	width: ${props => (props.digits === 'single' ? '55px' : '75px')};
+  margin-right: ${props => (props.digits === 'single' ? '45px' : '0')};
+`;
+
+const ClockList = styled(List)`
+	span:nth-child(1) {
+		padding-right: 5px;
+	}
+	span:nth-child(2) {
+		padding-left: 5px;
+	}
+`;
+
+export { ListContainer, CalculatorList, ClockList };

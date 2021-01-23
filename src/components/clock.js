@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { minuteToStrMap, hourToHangulMap, minuteToHangulMap } from './util/timeMapping';
-import Checkbox from "./checkbox";
-import ListContainer from '../styled-components/ListContainer';
+import Checkbox from './checkbox';
 import Settings from '../styled-components/Settings';
+import Button from '../styled-components/Button';
+import Wrapper from '../styled-components/Wrapper';
+import { ListContainer, ClockList } from '../styled-components/List';
+import { Clock, ClockField } from '../styled-components/clock';
 
 class ClockComponent extends React.Component {
   constructor() {
@@ -117,12 +120,12 @@ class ClockComponent extends React.Component {
                 {this.state.response === 'wrong' && <p class="wrong"><span role="img" aria-label="An exclamation mark emoji">❗</span>{this.state.hangulHour} 시 {this.state.hangulMinute} {this.state.hangulMinute !== "" && "분"}<span role="img" aria-label="An exclamation mark emoji">❗</span></p>}
               </div>
               <div className="submitContainer">
-                <StyledButton type="submit" theme="purple">Check</StyledButton>
+                <Button type="submit" theme="purple">Check</Button>
               </div>
             </form>
           </Wrapper>
           <Wrapper>
-            <StyledButton onClick={this.generateProblem}>Next</StyledButton>
+            <Button onClick={this.generateProblem}>Next</Button>
           </Wrapper>
         </Clock>
         <Settings
@@ -156,7 +159,7 @@ class ClockComponent extends React.Component {
             topValueDesktop={'95px'} 
             topValueMobile={'60px'}
           >
-            <List digits="single">
+            <ClockList digits="single">
               <li><span>1</span><span>일</span></li>
               <li><span>2</span><span>이</span></li>
               <li><span>3</span><span>삼</span></li>
@@ -167,14 +170,14 @@ class ClockComponent extends React.Component {
               <li><span>8</span><span>팔</span></li>
               <li><span>9</span><span>구</span></li>
               <li><span>10</span><span>십</span></li>
-            </List>
+            </ClockList>
           </ListContainer>
           <ListContainer 
             isVisible={this.state.pureToggle} 
             topValueDesktop={'95px'} 
             topValueMobile={'60px'}
           >
-            <List digits="single">
+            <ClockList digits="single">
               <li><span>1</span><span>하나 / 한</span></li>
               <li><span>2</span><span>둘 / 두</span></li>
               <li><span>3</span><span>셋 / 세</span></li>
@@ -185,152 +188,12 @@ class ClockComponent extends React.Component {
               <li><span>8</span><span>여덟</span></li>
               <li><span>9</span><span>아홉</span></li>
               <li><span>10</span><span>열</span></li>
-            </List>
+            </ClockList>
           </ListContainer>
         </Settings>
       </React.Fragment>
     )
   }
-}
-
-const Clock = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    .inputGroup {
-      display: flex;
-      align-items: center;
-      label {
-        font-weight: 600;
-        margin-left: 8px;
-        font-size: 24px;
-      }
-      input {
-        border: 3px solid black;
-        border-radius: 5px;
-        padding: 5px;
-        margin: 10px 0;
-        text-align: center;
-        font-size: 18px;
-      }
-      input.hour {
-        width: 60px;
-      }
-      input.minute {
-        width: 74px;
-        margin-left: 8px;
-      }
-      input.disabled {
-        border: 3px solid lightgrey;
-      }
-      label.disabled {
-        color: lightgrey;
-      }
-    }
-    p {
-      text-align: center;
-      font-size: 32px;
-      margin: 16px 0;
-    }
-    .submitContainer {
-      width: 100%;
-    }
-    .responseContainer {
-      text-align: center;
-      width: 100%;
-      .wrong {
-        font-size: 22px;
-      }
-    }
-  }
-  label[for="input"] { 
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  @media (max-width: 599px) {
-    grid-column: 2 / 3;
-    grid-row: 2 / 4;
-    margin-top: 5px;
-    margin-bottom: 0;
-    align-items: flex-end;
-  }
-`;
-
-const ClockField = styled.div`
-  border: 3px solid black;
-  border-radius: 5px;
-  p {
-    margin: 0;
-    text-align: center;
-    font-size: 48px;
-    padding: 16px;
-    padding-right: 18px;
-    letter-spacing: 2px;
-    font-weight: bold;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    span:nth-child(1) {
-      text-align: right;
-    }
-    span:nth-child(3) {
-      text-align: left;
-    }
-  }
-`;
-
-const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-  padding-left: 0;
-  list-style: none;
-  li {
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: space-between;
-    span:nth-child(1) {
-      padding-right: 5px;
-    }
-    span:nth-child(2) {
-      padding-left: 5px;
-    }
-  }
-`;
-
-export const StyledButton = styled.button`
-  background: ${props => (props.theme === "purple" ? "#5E3399" : "white")};
-  color: ${props => (props.theme === "purple" ? "white" : "#5E3399")};;
-  border: 3px solid #5E3399;
-  border-radius: 5px;
-  width: 100%;
-  margin: 10px 0;
-  padding: 5px;
-  transition: all 0.2s;
-  font-weight: 600;
-  &:hover {
-    background: #5E3399;
-    border: 3px solid #5E3399;
-    color: white;
-  }
-  @media (max-width: 599px) {
-    padding: 10px 5px;
-    margin: 5px 0;
-  }
-`;
-
-export const Wrapper = styled.div`
-  width: 200px;
-  margin: ${props => (props.margin === 'auto' ? '0 auto' : '0')}
-`;
+};
 
 export default ClockComponent;
