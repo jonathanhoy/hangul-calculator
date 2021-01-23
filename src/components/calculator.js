@@ -197,18 +197,19 @@ class CalculatorComponent extends React.Component {
           sinoToggle={this.state.sinoToggle}
           pureToggle={this.state.pureToggle}
         >
-          <div className="options-container">
-            <div className="toggle">
+          <ul className="options-list">
+            <li className="options-list-item option">
               <label htmlFor="simpleNumbersToggle">
                 <p className="simpleNumbers">Simple numbers</p>
                 <Checkbox
+                  firstItem
                   id="simpleNumbersToggle"
                   checked={this.state.simpleNumbersToggle}
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-            <div className="toggle">
+            </li>
+            <li className="options-list-item option">
               <label htmlFor="multipleChoiceToggle">
                 <p className="multipleChoice">Multiple choice</p>
                 <Checkbox
@@ -217,33 +218,33 @@ class CalculatorComponent extends React.Component {
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-          </div>
-          <div className="reference-container">
-            <div className="toggle">
+            </li>
+            <li className="options-list-item number">
               <label htmlFor="sinoToggle">
                 <p className="sino">Sino<span className="mobileHide">-Korean</span></p>
                 <Checkbox
+                  secondLastItem
                   id="sinoToggle"
                   checked={this.state.sinoToggle}
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-            <div className="toggle">
+            </li>
+            <li className="options-list-item number">
               <label htmlFor="pureToggle">
                 <p className="pure">Pure <span className="mobileHide">Korean</span></p>
                 <Checkbox
+                  lastItem
                   id="pureToggle"
                   checked={this.state.pureToggle}
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-          </div>
+            </li>
+          </ul>
           <ListContainer 
             isVisible={this.state.sinoToggle} 
-            topValueDesktop={'175px'} 
+            topValueDesktop={'180px'} 
             topValueMobile={'153px'}
           >
             <CalculatorList digits="single">
@@ -272,7 +273,7 @@ class CalculatorComponent extends React.Component {
           </ListContainer>
           <ListContainer 
             isVisible={this.state.pureToggle} 
-            topValueDesktop={'175px'} 
+            topValueDesktop={'180px'} 
             topValueMobile={'153px'}
           >
             <CalculatorList digits="single">

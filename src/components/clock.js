@@ -131,31 +131,35 @@ class ClockComponent extends React.Component {
           sinoToggle={this.state.sinoToggle}
           pureToggle={this.state.pureToggle}
         >
-          <div className="reference-container">
-            <div className="toggle">
+          <ul className="options-list">
+            <li className="options-list-item number">
               <label htmlFor="sinoToggle">
                 <p className="sino">Sino<span className="mobileHide">-Korean</span></p>
                 <Checkbox
+                  firstItem
+                  twoItemsOnly
                   id="sinoToggle"
                   checked={this.state.sinoToggle}
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-            <div className="toggle">
+            </li>
+            <li className="options-list-item number">
               <label htmlFor="pureToggle">
                 <p className="pure">Pure <span className="mobileHide">Korean</span></p>
                 <Checkbox
+                  lastItem
+                  twoItemsOnly
                   id="pureToggle"
                   checked={this.state.pureToggle}
                   onChange={this.handleCheckboxChange}
                 />
               </label>
-            </div>
-          </div>
+            </li>
+          </ul>
           <ListContainer 
             isVisible={this.state.sinoToggle} 
-            topValueDesktop={'95px'} 
+            topValueDesktop={'98px'} 
             topValueMobile={'60px'}
           >
             <ClockList digits="single">
@@ -173,7 +177,7 @@ class ClockComponent extends React.Component {
           </ListContainer>
           <ListContainer 
             isVisible={this.state.pureToggle} 
-            topValueDesktop={'95px'} 
+            topValueDesktop={'98px'} 
             topValueMobile={'60px'}
           >
             <ClockList digits="single">
