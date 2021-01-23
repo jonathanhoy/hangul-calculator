@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from "./checkbox";
+import { ListContainer } from '../styled-components/ListContainer';
  
 class CalculatorComponent extends React.Component {
   constructor() {
@@ -237,64 +238,64 @@ class CalculatorComponent extends React.Component {
               </label>
             </div>
           </div>
-          {
-            this.state.sinoToggle === true && (
-              <ListContainer>
-                <List digits="single">
-                  <li><span>1</span><span>일</span></li>
-                  <li><span>2</span><span>이</span></li>
-                  <li><span>3</span><span>삼</span></li>
-                  <li><span>4</span><span>사</span></li>
-                  <li><span>5</span><span>오</span></li>
-                  <li><span>6</span><span>육</span></li>
-                  <li><span>7</span><span>칠</span></li>
-                  <li><span>8</span><span>팔</span></li>
-                  <li><span>9</span><span>구</span></li>
-                </List>
-                <List>
-                  <li><span>10</span><span>십</span></li>
-                  <li><span>20</span><span>이십</span></li>
-                  <li><span>30</span><span>삼십</span></li>
-                  <li><span>40</span><span>사십</span></li>
-                  <li><span>50</span><span>오십</span></li>
-                  <li><span>60</span><span>육십</span></li>
-                  <li><span>70</span><span>칠십</span></li>
-                  <li><span>80</span><span>팔십</span></li>
-                  <li><span>90</span><span>구십</span></li>
-                  <li><span>100</span><span>백</span></li>
-                </List>
-              </ListContainer>
-            )
-          }
-          {
-            this.state.pureToggle === true && (
-              <ListContainer>
-                <List digits="single">
-                  <li><span>1</span><span>하나</span></li>
-                  <li><span>2</span><span>둘</span></li>
-                  <li><span>3</span><span>셋</span></li>
-                  <li><span>4</span><span>넷</span></li>
-                  <li><span>5</span><span>다섯</span></li>
-                  <li><span>6</span><span>여섯</span></li>
-                  <li><span>7</span><span>일곱</span></li>
-                  <li><span>8</span><span>여덟</span></li>
-                  <li><span>9</span><span>아홉</span></li>
-                </List>
-                <List>
-                  <li><span>10</span><span>열</span></li>
-                  <li><span>20</span><span>스물</span></li>
-                  <li><span>30</span><span>서른</span></li>
-                  <li><span>40</span><span>마흔</span></li>
-                  <li><span>50</span><span>쉰</span></li>
-                  <li><span>60</span><span>예순</span></li>
-                  <li><span>70</span><span>일흔</span></li>
-                  <li><span>80</span><span>여든</span></li>
-                  <li><span>90</span><span>아흔</span></li>
-                  <li><span>100</span><span>백</span></li>
-                </List>
-              </ListContainer>
-            )
-          }
+          <ListContainer 
+            isVisible={this.state.sinoToggle} 
+            topValueDesktop={'175px'} 
+            topValueMobile={'153px'}
+          >
+            <List digits="single">
+              <li><span>1</span><span>일</span></li>
+              <li><span>2</span><span>이</span></li>
+              <li><span>3</span><span>삼</span></li>
+              <li><span>4</span><span>사</span></li>
+              <li><span>5</span><span>오</span></li>
+              <li><span>6</span><span>육</span></li>
+              <li><span>7</span><span>칠</span></li>
+              <li><span>8</span><span>팔</span></li>
+              <li><span>9</span><span>구</span></li>
+            </List>
+            <List>
+              <li><span>10</span><span>십</span></li>
+              <li><span>20</span><span>이십</span></li>
+              <li><span>30</span><span>삼십</span></li>
+              <li><span>40</span><span>사십</span></li>
+              <li><span>50</span><span>오십</span></li>
+              <li><span>60</span><span>육십</span></li>
+              <li><span>70</span><span>칠십</span></li>
+              <li><span>80</span><span>팔십</span></li>
+              <li><span>90</span><span>구십</span></li>
+              <li><span>100</span><span>백</span></li>
+            </List>
+          </ListContainer>
+          <ListContainer 
+            isVisible={this.state.pureToggle} 
+            topValueDesktop={'175px'} 
+            topValueMobile={'153px'}
+          >
+            <List digits="single">
+              <li><span>1</span><span>하나</span></li>
+              <li><span>2</span><span>둘</span></li>
+              <li><span>3</span><span>셋</span></li>
+              <li><span>4</span><span>넷</span></li>
+              <li><span>5</span><span>다섯</span></li>
+              <li><span>6</span><span>여섯</span></li>
+              <li><span>7</span><span>일곱</span></li>
+              <li><span>8</span><span>여덟</span></li>
+              <li><span>9</span><span>아홉</span></li>
+            </List>
+            <List>
+              <li><span>10</span><span>열</span></li>
+              <li><span>20</span><span>스물</span></li>
+              <li><span>30</span><span>서른</span></li>
+              <li><span>40</span><span>마흔</span></li>
+              <li><span>50</span><span>쉰</span></li>
+              <li><span>60</span><span>예순</span></li>
+              <li><span>70</span><span>일흔</span></li>
+              <li><span>80</span><span>여든</span></li>
+              <li><span>90</span><span>아흔</span></li>
+              <li><span>100</span><span>백</span></li>
+            </List>
+          </ListContainer>
         </Settings>
       </React.Fragment>
     )
@@ -479,30 +480,6 @@ const Settings = styled.section`
   }
   .mobileHide {
     display: none;
-  }
-`;
-
-const ListContainer = styled.div`
-  position: absolute;
-  top: 175px;
-  right: 0;
-  display: flex;
-  background: gainsboro;
-  padding: 10px;
-  width: 175px;
-  justify-content: space-between;
-  border-radius: 5px;
-  span {
-    font-weight: 600;
-  }
-  ul {
-    margin: 0;
-  }
-  @media (max-width: 599px) {
-    top: 153px;
-    left: 0;
-    width: 100%;
-    justify-content: space-between;
   }
 `;
 

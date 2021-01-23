@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { minuteToStrMap, hourToHangulMap, minuteToHangulMap } from './util/timeMapping';
 import Checkbox from "./checkbox";
+import { ListContainer } from '../styled-components/ListContainer';
 
 class ClockComponent extends React.Component {
   constructor() {
@@ -107,7 +108,7 @@ class ClockComponent extends React.Component {
               </div>
               <div className="inputGroup">
                 <input disabled={this.state.minute === "00" ? true : false} aria-label={`Type minute here`} className={this.state.minute === "00" ? "minute disabled" : "minute"} type="text" id="ansMinute" name="ansMinute" onChange={this.handleChange} value={this.state.ansMinute} placeholder="" />
-                <label htmlFor="ansMinute" class={this.state.minute === "00" ? "minute disabled" : "minute"}>분</label>
+                <label htmlFor="ansMinute" className={this.state.minute === "00" ? "minute disabled" : "minute"}>분</label>
               </div>
               <div className="responseContainer">
                 {this.state.response === '' && <p>&nbsp;</p>}
@@ -149,42 +150,42 @@ class ClockComponent extends React.Component {
               </label>
             </div>
           </div>
-          {
-            this.state.sinoToggle === true && (
-              <ListContainer>
-                <List digits="single">
-                  <li><span>1</span><span>일</span></li>
-                  <li><span>2</span><span>이</span></li>
-                  <li><span>3</span><span>삼</span></li>
-                  <li><span>4</span><span>사</span></li>
-                  <li><span>5</span><span>오</span></li>
-                  <li><span>6</span><span>육</span></li>
-                  <li><span>7</span><span>칠</span></li>
-                  <li><span>8</span><span>팔</span></li>
-                  <li><span>9</span><span>구</span></li>
-                  <li><span>10</span><span>십</span></li>
-                </List>
-              </ListContainer>
-            )
-          }
-          {
-            this.state.pureToggle === true && (
-              <ListContainer>
-                <List digits="single">
-                  <li><span>1</span><span>하나 / 한</span></li>
-                  <li><span>2</span><span>둘 / 두</span></li>
-                  <li><span>3</span><span>셋 / 세</span></li>
-                  <li><span>4</span><span>넷 / 네</span></li>
-                  <li><span>5</span><span>다섯</span></li>
-                  <li><span>6</span><span>여섯</span></li>
-                  <li><span>7</span><span>일곱</span></li>
-                  <li><span>8</span><span>여덟</span></li>
-                  <li><span>9</span><span>아홉</span></li>
-                  <li><span>10</span><span>열</span></li>
-                </List>
-              </ListContainer>
-            )
-          }
+          <ListContainer 
+            isVisible={this.state.sinoToggle} 
+            topValueDesktop={'95px'} 
+            topValueMobile={'60px'}
+          >
+            <List digits="single">
+              <li><span>1</span><span>일</span></li>
+              <li><span>2</span><span>이</span></li>
+              <li><span>3</span><span>삼</span></li>
+              <li><span>4</span><span>사</span></li>
+              <li><span>5</span><span>오</span></li>
+              <li><span>6</span><span>육</span></li>
+              <li><span>7</span><span>칠</span></li>
+              <li><span>8</span><span>팔</span></li>
+              <li><span>9</span><span>구</span></li>
+              <li><span>10</span><span>십</span></li>
+            </List>
+          </ListContainer>
+          <ListContainer 
+            isVisible={this.state.pureToggle} 
+            topValueDesktop={'95px'} 
+            topValueMobile={'60px'}
+          >
+            <List digits="single">
+              <li><span>1</span><span>하나 / 한</span></li>
+              <li><span>2</span><span>둘 / 두</span></li>
+              <li><span>3</span><span>셋 / 세</span></li>
+              <li><span>4</span><span>넷 / 네</span></li>
+              <li><span>5</span><span>다섯</span></li>
+              <li><span>6</span><span>여섯</span></li>
+              <li><span>7</span><span>일곱</span></li>
+              <li><span>8</span><span>여덟</span></li>
+              <li><span>9</span><span>아홉</span></li>
+              <li><span>10</span><span>열</span></li>
+            </List>
+          </ListContainer>
         </Settings>
       </React.Fragment>
     )
@@ -349,29 +350,29 @@ const Settings = styled.section`
   }
 `;
 
-const ListContainer = styled.div`
-  position: absolute;
-  top: 95px;
-  right: 0;
-  display: flex;
-  background: gainsboro;
-  padding: 10px;
-  border-radius: 5px;
-  width: 175px;
-  span {
-    font-weight: 600;
-  }
-  ul {
-    margin: 0 auto;
-    width: 65%;
-  }
-  @media (max-width: 599px) {
-    top: 60px;
-    left: 0;
-    width: 100%;
-    justify-content: space-between;
-  }
-`;
+// const ListContainer = styled.div`
+//   position: absolute;
+//   top: 95px;
+//   right: 0;
+//   display: flex;
+//   background: gainsboro;
+//   padding: 10px;
+//   border-radius: 5px;
+//   width: 175px;
+//   span {
+//     font-weight: 600;
+//   }
+//   ul {
+//     margin: 0 auto;
+//     width: 65%;
+//   }
+//   @media (max-width: 599px) {
+//     top: 60px;
+//     left: 0;
+//     width: 100%;
+//     justify-content: space-between;
+//   }
+// `;
 
 const List = styled.ul`
   display: flex;

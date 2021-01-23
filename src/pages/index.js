@@ -1,7 +1,7 @@
 import React from "react"
 import styled from 'styled-components'
 
-import Header from "../components/header"
+// import Header from "../components/header"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import CalculatorComponent from "../components/calculator"
@@ -37,7 +37,7 @@ class IndexPage extends React.Component {
       <>
         <Layout viewCalculator={this.state.viewCalculator} viewClock={this.state.viewClock}>
           <MainGrid>
-            <SEO title={this.state.viewCalculator && "한글 Calculator" || this.state.viewClock && "한글 Clock"} />
+            <SEO title={(this.state.viewCalculator && "한글 Calculator") || (this.state.viewClock && "한글 Clock")} />
             <StyledNav>
               <ul className="nav-inner-container">
                 <li>
@@ -47,12 +47,12 @@ class IndexPage extends React.Component {
                 </li>
                 <li>
                   <button className="nav-features" onClick={this.viewCalculator}>
-                    <p>Calculator</p>
+                    <NavItem active={this.state.viewCalculator}>Calculator</NavItem>
                   </button>
                 </li>
                 <li>
                   <button className="nav-features" onClick={this.viewClock}>
-                    <p>Clock</p>
+                    <NavItem active={this.state.viewClock}>Clock</NavItem>
                   </button>
                 </li>
               </ul>
@@ -116,11 +116,9 @@ const StyledNav = styled.nav`
     p {
       margin: 0;
       text-align: left;
-      color: rgba(0,0,0,0.8);
-      transition: all 0.2s;
     }
     p:hover {
-      color: #5e3399;
+      text-decoration: underline;
     }
   }
   @media (max-width: 599px) {
@@ -140,6 +138,16 @@ const StyledNav = styled.nav`
       border-radius: 15px;
       margin-bottom: 5px;
     }
+  }
+`;
+
+const NavItem = styled.p`
+  margin: 0;
+  text-align: left;
+  transition: all 0.2s;
+  color: ${props => (props.active === true ? '#5e3399' : 'rgba(0,0,0,0.8')};
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
