@@ -52,7 +52,7 @@ class IndexPage extends React.Component {
                 </li>
                 <li>
                   <button className="nav-features" onClick={this.viewClock}>
-                    <p>Clock <span className="nav-new-feature">new</span></p>
+                    <p>Clock</p>
                   </button>
                 </li>
               </ul>
