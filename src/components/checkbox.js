@@ -26,8 +26,6 @@ const StyledCheckbox = styled.div`
   display: inline-block;
   background: ${props => props.checked ? '#5E3399' : 'white'};
   border: ${props => props.checked ? '1px solid #5E3399' : '1px solid rgba(0,0,0,0.8)' };
-  /* border-top: ${props => props.firstItem ? '1px solid #5E3399' : 'none' }; */
-  /* outline: 1px solid black; */
   transition: all 0.2s;
   position: absolute;
   top: 0;
@@ -36,7 +34,6 @@ const StyledCheckbox = styled.div`
   right: 0;
   z-index: -1;
   border-radius: 5px;
-}
 `
 
 const CheckboxContainer = styled.div`
