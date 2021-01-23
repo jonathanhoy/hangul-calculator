@@ -2,19 +2,38 @@ import styled from 'styled-components';
 
 const Settings = styled.section`
   position: relative;
-  .options-container, .reference-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-top: 10px;
+  .options-list {
+    width: 175px;
+    margin-top: 10px;
+    border-radius: 5px;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .toggle {
-    margin-top: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    li {
+      list-style: none;
+      margin-top: 5px;
+    }
+    .option,
+    .number {
+      grid-column: span 2;
+    }
+    @media (max-width: 599px) {
+      width: 100%;
+      grid-column-gap: 5px;
+      margin-top: 0;
+      .number {
+        grid-column: span 1;
+      }
+    }
   }
   label {
     position: relative;
     padding: 5px;
-    width: 175px;
+    width: 100%;
     display: inline-block;
   }
   p {
@@ -43,9 +62,7 @@ const Settings = styled.section`
       width: 100%;
       padding: 10px;
     }
-    .toggle {
-      width: auto;
-      margin-top: 5px;
+    .options-list-item {
       width: 100%;
     }
     .reference-container {
