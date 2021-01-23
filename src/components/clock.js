@@ -161,6 +161,7 @@ class ClockComponent extends React.Component {
             isVisible={this.state.sinoToggle} 
             topValueDesktop={'98px'} 
             topValueMobile={'60px'}
+            singleList
           >
             <ClockList digits="single">
               <li><span>1</span><span>일</span></li>
@@ -179,6 +180,7 @@ class ClockComponent extends React.Component {
             isVisible={this.state.pureToggle} 
             topValueDesktop={'98px'} 
             topValueMobile={'60px'}
+            singleList
           >
             <ClockList digits="single">
               <li><span>1</span><span>하나 / 한</span></li>

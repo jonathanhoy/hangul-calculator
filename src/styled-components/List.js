@@ -9,7 +9,7 @@ const ListContainer = styled.div`
   background: gainsboro;
   padding: 10px;
   width: 175px;
-  justify-content: space-between;
+  justify-content: ${props => (props.singleList === true ? 'center' : 'space-between')};
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
   span {
@@ -47,6 +47,8 @@ const CalculatorList = styled(List)`
 `;
 
 const ClockList = styled(List)`
+  width: 90px;
+  margin: 0 auto;
 	span:nth-child(1) {
 		padding-right: 5px;
 	}
