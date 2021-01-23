@@ -111,9 +111,21 @@ const StyledNav = styled.nav`
     font-size: 18px;
     display: block;
     padding: 0;
+    width: 100%;
     p {
       margin: 0;
-      padding: 5px;
+      padding: 5px 10px;
+      text-align: center;
+    }
+  }
+  .nav-overview {
+    border-bottom: 1px solid rgba(0,0,0,0.8);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    @media (max-width: 599px) {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
     }
   }
   @media (max-width: 599px) {
