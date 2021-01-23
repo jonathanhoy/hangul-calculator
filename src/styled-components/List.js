@@ -5,13 +5,13 @@ const ListContainer = styled.div`
   top: ${props => (props.topValueDesktop)};
   right: ${props => (props.isVisible === true ? '0' : '-200px')};
   opacity: ${props => (props.isVisible === true ? '1' : '0')};
-  display: flex;
+	display: flex;
   background: gainsboro;
   padding: 10px;
   width: 175px;
   justify-content: space-between;
   border-radius: 5px;
-  transition: 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   span {
     font-weight: 600;
   }

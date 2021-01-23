@@ -53,6 +53,7 @@ class Layout extends React.Component {
 
 const SiteContainer = styled.div`
   height: 100vh;
+  overflow: hidden;
 `;
 
 export const MainContainer = styled.div`
