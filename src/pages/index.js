@@ -1,7 +1,5 @@
 import React from "react"
 import styled from 'styled-components'
-
-// import Header from "../components/header"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import CalculatorComponent from "../components/calculator"
@@ -100,7 +98,7 @@ const StyledNav = styled.nav`
   }
   .nav-inner-container {
     background: Gainsboro;
-    padding: 25px;
+    padding: 20px;
     border-radius: 25px;
     display: inline-block;
   }
@@ -115,10 +113,7 @@ const StyledNav = styled.nav`
     padding: 0;
     p {
       margin: 0;
-      text-align: left;
-    }
-    p:hover {
-      text-decoration: underline;
+      padding: 5px;
     }
   }
   @media (max-width: 599px) {
@@ -144,11 +139,10 @@ const StyledNav = styled.nav`
 const NavItem = styled.p`
   margin: 0;
   text-align: left;
-  transition: all 0.2s;
-  color: ${props => (props.active === true ? '#5e3399' : 'rgba(0,0,0,0.8')};
-  &:hover {
-    text-decoration: underline;
-  }
+  padding: 5px;
+  color: ${props => (props.active === true ? 'white' : 'rgba(0,0,0,0.8')};
+  background: #5e3399;
+  border-radius: 5px;
 `;
 
-export default IndexPage
+export default IndexPage;

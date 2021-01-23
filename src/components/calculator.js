@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import numToWordsMap from './util/mapping';
 import Checkbox from './checkbox';
 import Settings from '../styled-components/Settings';
