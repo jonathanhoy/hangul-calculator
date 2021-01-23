@@ -487,11 +487,19 @@ const ListContainer = styled.div`
   top: 175px;
   right: 0;
   display: flex;
+  background: gainsboro;
+  padding: 10px;
+  width: 175px;
+  justify-content: space-between;
+  border-radius: 5px;
   span {
     font-weight: 600;
   }
+  ul {
+    margin: 0;
+  }
   @media (max-width: 599px) {
-    top: 155px;
+    top: 153px;
     left: 0;
     width: 100%;
     justify-content: space-between;
@@ -529,6 +537,7 @@ export const StyledButton = styled.button`
   }
   @media (max-width: 599px) {
     padding: 10px 5px;
+    margin: 5px 0;
   }
 `;
 

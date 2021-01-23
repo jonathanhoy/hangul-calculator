@@ -352,14 +352,22 @@ const Settings = styled.section`
 const ListContainer = styled.div`
   position: absolute;
   top: 95px;
-  right: 10px;
+  right: 0;
   display: flex;
+  background: gainsboro;
+  padding: 10px;
+  border-radius: 5px;
+  width: 175px;
   span {
     font-weight: 600;
   }
+  ul {
+    margin: 0 auto;
+    width: 65%;
+  }
   @media (max-width: 599px) {
     top: 60px;
-    left: 10px;
+    left: 0;
     width: 100%;
     justify-content: space-between;
   }
@@ -400,6 +408,7 @@ export const StyledButton = styled.button`
   }
   @media (max-width: 599px) {
     padding: 10px 5px;
+    margin: 5px 0;
   }
 `;
 
