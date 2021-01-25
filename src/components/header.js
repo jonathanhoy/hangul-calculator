@@ -15,6 +15,9 @@ const StyledHeader = styled.header`
     color: white;
   }
   @media (max-width: 599px) {
+    div {
+      padding: 10px 15px;
+    }
     .mobileBlock {
       display: block;
     }
@@ -30,7 +33,7 @@ class Header extends React.Component {
       <StyledHeader>
       <div>
         <h1>
-          <span className="mobileBlock">{this.props.viewCalculator && '한글 계산기'}{this.props.viewClock && '한글 시계'}</span> <span className="mobileHide">-</span> <span className="mobileHide">{this.props.viewCalculator && 'Hangul Calculator'}{this.props.viewClock && 'Hangul Clock'}</span>
+          <span className="mobileBlock">{this.props.viewCalculator && 'Hangul Calculator'}{this.props.viewClock && 'Hangul Clock'}</span> <span className="mobileHide">-</span> <span className="mobileBlock">{this.props.viewCalculator && '한글 계산기'}{this.props.viewClock && '한글 시계'}</span>
         </h1>
       </div>
     </StyledHeader>
